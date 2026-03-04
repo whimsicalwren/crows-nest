@@ -28,11 +28,7 @@ public class NestedBranchBuilder<T> {
         );
     }
 
-    public static <T> LiteralArgumentBuilder<CommandSourceStack> nestedBranch(
-            String name,
-            Function<LoadedShip, T> extractor,
-            Consumer<NestedBranchBuilder<T>> consumer
-    ) {
+    public static <T> LiteralArgumentBuilder<CommandSourceStack> nestedBranch(String name, Function<LoadedShip, T> extractor, Consumer<NestedBranchBuilder<T>> consumer) {
         LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal(name);
 
         NestedBranchBuilder<T> builder = new NestedBranchBuilder<>(root, extractor);
@@ -41,11 +37,7 @@ public class NestedBranchBuilder<T> {
         return root;
     }
 
-    public <R> void subBranch(
-            String name,
-            Function<T, R> subExtractor,
-            Consumer<NestedBranchBuilder<R>> consumer
-    ) {
+    public <R> void subBranch(String name, Function<T, R> subExtractor, Consumer<NestedBranchBuilder<R>> consumer) {
         LiteralArgumentBuilder<CommandSourceStack> child =
                 Commands.literal(name);
 

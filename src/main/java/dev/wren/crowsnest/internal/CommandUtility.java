@@ -38,12 +38,8 @@ public class CommandUtility {
     }
 
     public static String format(Object object) {
-        if (object instanceof AABB aabb) {
+        if (object instanceof AABB aabb) { // todo replace with reg
             return formatAABB(aabb);
-        }
-
-        if (object instanceof Vector vec) {
-
         }
 
         return String.valueOf(object);
