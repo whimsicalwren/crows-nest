@@ -41,13 +41,7 @@ public class CommandNode<T> {
 
     public <R> CommandNode<R> commandNode(String name, Function<T, R> extractor) {
 
-        CommandNode<R> child =
-                new CommandNode<>(
-                        name,
-                        ship -> extractor.apply(
-                                this.extractor.apply(ship)
-                        )
-                );
+        CommandNode<R> child = new CommandNode<>(name, ship -> extractor.apply(this.extractor.apply(ship)));
 
         children.add(child);
 

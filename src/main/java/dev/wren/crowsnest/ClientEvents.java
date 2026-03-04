@@ -16,10 +16,6 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void registerCommands(RegisterClientCommandsEvent event) {
-        LOGGER.info("Registering type branches...");
-        TypeBranches.register();
-        LOGGER.info("Registering type formatters...");
-        TypeFormatters.register();
         LOGGER.info("Registering commands...");
         AllCommands.register(event);
     }

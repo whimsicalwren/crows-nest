@@ -8,6 +8,7 @@ import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.network.chat.Component;
 import org.valkyrienskies.core.api.ships.LoadedShip;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static dev.wren.crowsnest.internal.FormatUtility.asCommandOutput;
@@ -16,6 +17,12 @@ public class CommandUtility {
 
     public static <T> LiteralArgumentBuilder<CommandSourceStack> shipNode(String name, Function<LoadedShip, T> func, Class<T> type) {
         CommandNode<T> node = new CommandNode<>(name, func).typeAdapter(type);
+
+        return node.build();
+    }
+
+    public static <T> LiteralArgumentBuilder<CommandSourceStack> branchNode(String name, Function<LoadedShip, T> func, Consumer<CommandNode<T>> consumer) {
+        CommandNode<T> node = new CommandNode<>(name, func).subCommands(consumer);
 
         return node.build();
     }

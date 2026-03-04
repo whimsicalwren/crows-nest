@@ -12,6 +12,9 @@ public class CrowsNest {
     public static final String MODID = "crowsnest";
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public CrowsNest(FMLJavaModLoadingContext context) {}
+    public CrowsNest(FMLJavaModLoadingContext context) {
+        TypeBranches.register();
+        TypeFormatters.register();
+    }
 
 }
