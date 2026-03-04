@@ -1,21 +1,22 @@
-package dev.wren.crowsnest.registries;
+package dev.wren.crowsnest.internal.reg;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import org.checkerframework.checker.units.qual.C;
-import org.valkyrienskies.core.impl.shadow.Co;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import static dev.wren.crowsnest.CrowsNest.LOGGER;
 
 public class TypeFormatterRegistry {
 
     private static final Map<Class<?>, Function<Object, MutableComponent>> FORMATTERS = new HashMap<>();
 
     public static <T> void registerFormatter(Class<T> type, Function<T, MutableComponent> formatter) {
+        LOGGER.info("Registering formatter for {}", type.getCanonicalName());
+
         FORMATTERS.put(type, object -> formatter.apply(type.cast(object)));
     }
 

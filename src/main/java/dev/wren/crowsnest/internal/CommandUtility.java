@@ -3,12 +3,9 @@ package dev.wren.crowsnest.internal;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-import dev.wren.crowsnest.registries.TypeFormatterRegistry;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.phys.AABB;
 import org.valkyrienskies.core.api.ships.LoadedShip;
 
 import java.util.function.Function;
@@ -17,8 +14,10 @@ import static dev.wren.crowsnest.internal.FormatUtility.asCommandOutput;
 
 public class CommandUtility {
 
-    public static LiteralArgumentBuilder<CommandSourceStack> shipLiteral(String name, Function<LoadedShip, ?> func) {
-        return Commands.literal(name).executes(ctx -> shipHandle(ctx, func, name));
+    public static <T> LiteralArgumentBuilder<CommandSourceStack> shipNode(String name, Function<LoadedShip, T> func, Class<T> type) {
+        CommandNode<T> node = new CommandNode<>(name, func).typeAdapter(type);
+
+        return node.build();
     }
 
     public static int shipHandle(CommandContext<CommandSourceStack> context, Function<LoadedShip, ?> func, String name) {
