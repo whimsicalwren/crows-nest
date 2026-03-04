@@ -3,6 +3,7 @@ package dev.wren.crowsnest.internal;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import dev.wren.crowsnest.registries.TypeFormatterRegistry;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
@@ -10,11 +11,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.AABB;
 import org.valkyrienskies.core.api.ships.LoadedShip;
 
-import java.util.Vector;
 import java.util.function.Function;
 
 import static dev.wren.crowsnest.internal.Utility.formatAABB;
-import static dev.wren.crowsnest.internal.Utility.l;
 
 public class CommandUtility {
 
@@ -32,7 +31,7 @@ public class CommandUtility {
 
         Object result = func.apply(ship);
 
-        context.getSource().sendSuccess(l("Found ship with " + name + " " + format(result)), false);
+        context.getSource().sendSuccess(() -> TypeFormatterRegistry.format(result), false);
 
         return Command.SINGLE_SUCCESS;
     }

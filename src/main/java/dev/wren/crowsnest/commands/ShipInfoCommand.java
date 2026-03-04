@@ -26,12 +26,6 @@ public class ShipInfoCommand {
                     .then(shipLiteral("worldAABB", ship -> convertToAABB(ship.getWorldAABB())))
                     .then(shipLiteral("shipToWorld", LoadedShip::getShipToWorld))
                     .then(shipLiteral("worldToShip", LoadedShip::getWorldToShip))
-                    .then(NestedBranchBuilder.nestedBranch("shipTransform", LoadedShip::getTransform, tBranch -> {
-                        tBranch.add("positionInWorld", ShipTransform::getPositionInWorld);
-                        tBranch.add("positionInShip", ShipTransform::getPositionInShip);
-                        tBranch.add("shipToWorldScaling", ShipTransform::getShipToWorldScaling);
-                        tBranch.add("shipToWorldRotation", ShipTransform::getShipToWorldRotation);
-                    }))
                     .then(NestedBranchBuilder.nestedBranch("kinematics", LoadedShip::getKinematics, kBranch -> {
                         kBranch.add("position", BodyKinematics::getPosition);
                         kBranch.add("velocity", BodyKinematics::getVelocity);
