@@ -1,6 +1,8 @@
 package dev.wren.crowsnest.registries;
 
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import dev.wren.crowsnest.internal.reg.TypeBranchRegistry;
+import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaterniondc;
@@ -22,7 +24,6 @@ public class TypeBranches {
             node.commandNode("lengthSqr", Vec3::lengthSqr).doubleAdapter();
             node.commandNode("horizontalDistance", Vec3::horizontalDistance).doubleAdapter();
             node.commandNode("horizontalDistanceSqr", Vec3::horizontalDistanceSqr).doubleAdapter();
-            node.commandNode("normalize", Vec3::normalize);
         });
 
         TypeBranchRegistry.registerAdapter(Quaterniondc.class, node -> {
