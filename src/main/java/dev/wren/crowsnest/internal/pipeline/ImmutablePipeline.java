@@ -1,23 +1,11 @@
 package dev.wren.crowsnest.internal.pipeline;
 
-import dev.wren.crowsnest.internal.operation.OperationNode;
-import oshi.annotation.concurrent.Immutable;
+import dev.wren.crowsnest.internal.operation.OperationDefinition;
 
 import java.util.List;
 
-/**
- * Pipeline, but immutable
- */
-@Immutable
-public class ImmutablePipeline {
-
-    private final List<OperationNode> nodes;
-
-    public ImmutablePipeline(TransmascFemboyPipeline parent) {
-        this.nodes = parent.getOperations();
-    }
-
-    public List<OperationNode> getOperations() {
-        return nodes;
+public record ImmutablePipeline(List<OperationDefinition<?, ?>> operations) {
+    public ImmutablePipeline(Pipeline parent) {
+        this(parent.getOperations());
     }
 }

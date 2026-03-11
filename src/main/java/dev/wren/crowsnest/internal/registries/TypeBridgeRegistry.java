@@ -11,10 +11,6 @@ public class TypeBridgeRegistry {
 
     private static final Map<Class<?>, TypeBridge<?, ?>> BRIDGES = new HashMap<>();
 
-    public static boolean contains(Class<?> key) {
-        return BRIDGES.containsKey(key);
-    }
-
     public static <F, T> void registerBridge(Class<F> from, Class<T> to, Function<F, T> converter) {
         LOGGER.info("Registering bridge from {} to {}", from.getCanonicalName(), to.getCanonicalName());
 
@@ -43,11 +39,7 @@ public class TypeBridgeRegistry {
             return to;
         }
 
-        public T convert(F value) {
-            return converter.apply(value);
-        }
-
-        public T safeConvert(Object value) {
+        public T convert(Object value) {
             return converter.apply((F) value);
         }
 

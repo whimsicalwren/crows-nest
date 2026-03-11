@@ -1,23 +1,15 @@
 package dev.wren.crowsnest.internal;
 
-import com.mojang.brigadier.StringReader;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
+
 import org.joml.Vector3d;
-import org.joml.primitives.*;
 import org.valkyrienskies.core.api.ships.LoadedShip;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
-import java.util.function.Supplier;
 
 public class Utility {
-
-    public static Supplier<Component> l(String text) {
-        return () -> Component.literal(text);
-    }
 
     public static Long getShipIdAtPos(Level level, BlockPos pos) {
         LoadedShip loadedShip = VSGameUtilsKt.getLoadedShipManagingPos(level, pos);

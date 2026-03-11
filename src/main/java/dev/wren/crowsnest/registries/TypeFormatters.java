@@ -1,21 +1,22 @@
 package dev.wren.crowsnest.registries;
 
-import dev.wren.crowsnest.internal.registries.TypeFormatterRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+
+import org.apache.logging.log4j.Logger;
 import org.joml.Quaterniondc;
+
+import dev.wren.crowsnest.internal.registries.TypeFormatterRegistry;
 
 import java.text.DecimalFormat;
 import java.util.Map;
 
-import static dev.wren.crowsnest.CrowsNest.LOGGER;
-
 public class TypeFormatters {
 
 
-    public static void register() {
-        LOGGER.info("Registering type formatters...");
+    public static void register(Logger logger) {
+        logger.info("Registering type formatters...");
 
         TypeFormatterRegistry.registerFormatter(AABB.class, ((aabb, builder) ->
                 builder.piece("Min: ", ChatFormatting.WHITE)
