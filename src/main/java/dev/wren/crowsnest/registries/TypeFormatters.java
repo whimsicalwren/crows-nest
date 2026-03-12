@@ -33,6 +33,7 @@ public class TypeFormatters {
                         .format(NEWLINE)
                         .format("Volume: ")
                         .format(formatNumber(aabb.getXsize() * aabb.getYsize() * aabb.getZsize()), ChatFormatting.YELLOW)
+                        .build()
         ));
 
         TypeFormatterRegistry.registerFormatter(Vec3.class, ((vec3, builder) ->
@@ -40,6 +41,7 @@ public class TypeFormatters {
                         .format(NEWLINE)
                         .format("Length: ", ChatFormatting.WHITE)
                         .format(formatNumber(vec3.length()), ChatFormatting.YELLOW)
+                        .build()
         ));
 
         TypeFormatterRegistry.registerFormatter(Quaterniondc.class, (qdc, builder) ->
@@ -50,6 +52,7 @@ public class TypeFormatters {
                         .format(NEWLINE)
                         .format("Angle: ", ChatFormatting.WHITE)
                         .format(formatNumber(qdc.angle()), ChatFormatting.GOLD)
+                        .build()
         );
     }
 

@@ -36,7 +36,6 @@ public class DynamicShipInfoCommand {
                         LoadedShip ship = Utility.getShipAtPos(ctx.getSource().getUnsidedLevel(), pos);
 
                         String pipelineText = ctx.getArgument("pipeline", String.class);
-                        System.out.println(pipelineText);
                         ImmutablePipeline pipeline = Pipeline.parse(pipelineText).immutable();
 
                         Object value = ship;

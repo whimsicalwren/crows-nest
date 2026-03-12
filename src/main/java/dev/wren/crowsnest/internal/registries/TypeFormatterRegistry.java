@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static dev.wren.crowsnest.CrowsNest.LOGGER;
@@ -17,15 +18,10 @@ public class TypeFormatterRegistry {
 
     private static final Map<Class<?>, Function<Object, Component>> FORMATTERS = new HashMap<>();
 
-    public static <T> void registerFormatter(Class<T> type, BiConsumer<T, FormatBuilder> formatter) {
+    public static <T> void registerFormatter(Class<T> type, BiFunction<T, FormatBuilder, Component> formatter) {
         LOGGER.info("Registering formatter for {}", type.getCanonicalName());
 
-        FormatBuilder formatBuilder = new FormatBuilder();
-
-        FORMATTERS.put(type, object -> {
-            formatter.accept(type.cast(object), formatBuilder);
-            return formatBuilder.build();
-        });
+        FORMATTERS.put(type, object -> formatter.apply(type.cast(object), new FormatBuilder()));
     }
 
     public static Component format(Object object) {
