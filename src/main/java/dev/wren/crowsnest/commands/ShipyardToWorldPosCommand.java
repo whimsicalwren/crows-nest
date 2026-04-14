@@ -9,7 +9,7 @@ import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 
-import dev.wren.crowsnest.internal.Utility;
+import dev.wren.crowsnest.internal.util.Util;
 
 public class ShipyardToWorldPosCommand {
 
@@ -18,7 +18,7 @@ public class ShipyardToWorldPosCommand {
             .then(Commands.argument("pos", BlockPosArgument.blockPos())
                 .executes(ctx -> {
                     BlockPos localPos = BlockPosArgument.getBlockPos(ctx, "pos");
-                    BlockPos worldPos = Utility.getWorldPos(ctx.getSource().getUnsidedLevel(), localPos);
+                    BlockPos worldPos = Util.getWorldPos(ctx.getSource().getUnsidedLevel(), localPos);
 
                     ctx.getSource().sendSuccess(() -> Component.literal("Shipyard position " + formatBlockPos(localPos) + " corresponds to world position " + formatBlockPos(worldPos)), false);
 

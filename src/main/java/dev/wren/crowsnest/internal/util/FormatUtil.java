@@ -1,19 +1,21 @@
-package dev.wren.crowsnest.internal;
+package dev.wren.crowsnest.internal.util;
 
-import dev.wren.crowsnest.internal.registries.TypeFormatterRegistry;
+import dev.wren.crowsnest.internal.registries.FormatRegistry;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaterniondc;
 import org.joml.Vector3dc;
 
 import java.text.DecimalFormat;
+import java.util.function.Supplier;
 
-import static dev.wren.crowsnest.internal.registries.TypeFormatterRegistry.Format.of;
+import static dev.wren.crowsnest.internal.registries.FormatRegistry.Format.of;
 
-public class FormatUtility {
+public class FormatUtil {
 
-    public static TypeFormatterRegistry.Format[] formatVec3(Vec3 vec) {
-        return new TypeFormatterRegistry.Format[]{
+    public static FormatRegistry.Format[] formatVec3(Vec3 vec) {
+        return new FormatRegistry.Format[]{
                 of("X: ", ChatFormatting.WHITE),
                 of(formatNumber(vec.x), ChatFormatting.RED),
                 SEP,
@@ -28,12 +30,12 @@ public class FormatUtility {
         };
     }
 
-    public static TypeFormatterRegistry.Format[] formatVec3(Vector3dc vector3dc) {
+    public static FormatRegistry.Format[] formatVec3(Vector3dc vector3dc) {
         return formatVec3(new Vec3(vector3dc.x(), vector3dc.y(), vector3dc.z()));
     }
 
-    public static TypeFormatterRegistry.Format[] formatQuaternion(Quaterniondc qdc) {
-        return new TypeFormatterRegistry.Format[]{
+    public static FormatRegistry.Format[] formatQuaternion(Quaterniondc qdc) {
+        return new FormatRegistry.Format[]{
                 of("X: ", ChatFormatting.WHITE),
                 of(formatNumber(qdc.x()), ChatFormatting.RED),
                 SEP,
@@ -51,20 +53,20 @@ public class FormatUtility {
         };
     }
 
-    public static TypeFormatterRegistry.Format[] formatXYZ(Vec3 vec) {
+    public static FormatRegistry.Format[] formatXYZ(Vec3 vec) {
         return formatXYZ(vec.x, vec.y, vec.z);
     }
 
-    public static TypeFormatterRegistry.Format[] formatXYZ(Vector3dc vec) {
+    public static FormatRegistry.Format[] formatXYZ(Vector3dc vec) {
         return formatXYZ(vec.x(), vec.y(), vec.z());
     }
 
-    public static TypeFormatterRegistry.Format[] formatXYZW(Quaterniondc qdc) {
+    public static FormatRegistry.Format[] formatXYZW(Quaterniondc qdc) {
         return formatXYZW(qdc.x(), qdc.y(), qdc.z(), qdc.w());
     }
 
-    public static TypeFormatterRegistry.Format[] formatXYZ(double x, double y, double z) {
-        return new TypeFormatterRegistry.Format[]{
+    public static FormatRegistry.Format[] formatXYZ(double x, double y, double z) {
+        return new FormatRegistry.Format[]{
                 of("X: ", ChatFormatting.WHITE),
                 of(formatNumber(x), ChatFormatting.RED),
                 SEP,
@@ -76,8 +78,8 @@ public class FormatUtility {
         };
     }
 
-    public static TypeFormatterRegistry.Format[] formatXYZW(double x, double y, double z, double w) {
-        return new TypeFormatterRegistry.Format[]{
+    public static FormatRegistry.Format[] formatXYZW(double x, double y, double z, double w) {
+        return new FormatRegistry.Format[]{
                 of("X: ", ChatFormatting.WHITE),
                 of(formatNumber(x), ChatFormatting.RED),
                 SEP,
@@ -92,8 +94,8 @@ public class FormatUtility {
         };
     }
 
-    public static TypeFormatterRegistry.Format[] formatXYZPosition(double x, double y, double z) {
-        return new TypeFormatterRegistry.Format[]{
+    public static FormatRegistry.Format[] formatXYZPosition(double x, double y, double z) {
+        return new FormatRegistry.Format[]{
                 of("(", ChatFormatting.WHITE),
                 of(formatNumber(x), ChatFormatting.RED),
                 SEP,
@@ -104,8 +106,8 @@ public class FormatUtility {
         };
     }
 
-    public static TypeFormatterRegistry.Format[] formatXZ(double x, double z) {
-        return new TypeFormatterRegistry.Format[]{
+    public static FormatRegistry.Format[] formatXZ(double x, double z) {
+        return new FormatRegistry.Format[]{
                 of("X: ", ChatFormatting.WHITE),
                 of(formatNumber(x), ChatFormatting.RED),
                 SEP,
@@ -114,8 +116,8 @@ public class FormatUtility {
         };
     }
 
-    public static TypeFormatterRegistry.Format[] formatXZPosition(double x, double z) {
-        return new TypeFormatterRegistry.Format[]{
+    public static FormatRegistry.Format[] formatXZPosition(double x, double z) {
+        return new FormatRegistry.Format[]{
                 of("(", ChatFormatting.WHITE),
                 of(formatNumber(x), ChatFormatting.RED),
                 SEP,
@@ -124,9 +126,9 @@ public class FormatUtility {
         };
     }
 
-    public static TypeFormatterRegistry.Format NEWLINE = of("\n", ChatFormatting.WHITE);
+    public static FormatRegistry.Format NEWLINE = of("\n", ChatFormatting.WHITE);
 
-    public static TypeFormatterRegistry.Format SEP = of(", ", ChatFormatting.WHITE);
+    public static FormatRegistry.Format SEP = of(", ", ChatFormatting.WHITE);
 
     private static final DecimalFormat NORMAL_FORMAT = new DecimalFormat("#,##0.###");
 
@@ -149,6 +151,10 @@ public class FormatUtility {
         }
 
         return SMALL_FORMAT.format(value);
+    }
+
+    public static Supplier<Component> l(Object literalString) {
+        return () -> Component.literal(literalString.toString());
     }
 
 }

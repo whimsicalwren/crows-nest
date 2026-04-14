@@ -1,19 +1,19 @@
 package dev.wren.crowsnest;
 
-import net.minecraftforge.client.event.RegisterClientCommandsEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import dev.wren.crowsnest.impl.registry.CommandRegistryImpl;
+import dev.wren.crowsnest.impl.registry.ConverterRegistryImpl;
+import dev.wren.crowsnest.impl.registry.FormatRegistryImpl;
+import dev.wren.crowsnest.internal.registries.CommandRegistry;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import dev.wren.crowsnest.commands.AllCommands;
-import dev.wren.crowsnest.registries.*;
+import dev.wren.crowsnest.commands.CrowsNestCommands;
 
 @Mod(CrowsNest.MODID)
-@Mod.EventBusSubscriber(modid = CrowsNest.MODID)
 @SuppressWarnings("unused")
 public class CrowsNest {
     public static final String NAME = "Crow's Nest";
@@ -21,26 +21,16 @@ public class CrowsNest {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public CrowsNest(FMLJavaModLoadingContext context) {
-        LOGGER.info("Registering bridges...");
-        TypeBridges.register();
-        LOGGER.info("Registering formatters...");
-        TypeFormatters.register();
-        LOGGER.info("Registering operations...");
-        Operations.register();
+        ConverterRegistryImpl.register();
+        CommandRegistryImpl.register();
+        FormatRegistryImpl.register();
+
+        CommandRegistry.buildAll();
+
+        MinecraftForge.EVENT_BUS.addListener(CrowsNestCommands::register);
+        MinecraftForge.EVENT_BUS.addListener(CrowsNestCommands::registerClient);
 
         LOGGER.info("{} ({}) initialized!", NAME, MODID);
-    }
-
-    @SubscribeEvent
-    public static void registerClientCommands(RegisterClientCommandsEvent event) {
-        LOGGER.info("Registering client commands...");
-        AllCommands.registerClient(event);
-    }
-
-    @SubscribeEvent
-    public static void registerCommands(RegisterCommandsEvent event) {
-        LOGGER.info("Registering commands...");
-        AllCommands.register(event);
     }
 
 }

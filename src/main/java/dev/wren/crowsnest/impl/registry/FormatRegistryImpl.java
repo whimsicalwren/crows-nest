@@ -1,4 +1,4 @@
-package dev.wren.crowsnest.registries;
+package dev.wren.crowsnest.impl.registry;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.phys.AABB;
@@ -6,16 +6,16 @@ import net.minecraft.world.phys.Vec3;
 
 import org.joml.Quaterniond;
 
-import dev.wren.crowsnest.internal.registries.TypeFormatterRegistry;
+import dev.wren.crowsnest.internal.registries.FormatRegistry;
 import org.valkyrienskies.core.impl.bodies.properties.BodyKinematicsImpl;
 import org.valkyrienskies.core.impl.game.ChunkClaimImpl;
 
-import static dev.wren.crowsnest.internal.FormatUtility.*;
+import static dev.wren.crowsnest.internal.util.FormatUtil.*;
 
-public class TypeFormatters {
+public class FormatRegistryImpl {
 
     public static void register() {
-        TypeFormatterRegistry.registerFormatter(AABB.class, ((aabb, builder) ->
+        FormatRegistry.registerFormatter(AABB.class, ((aabb, builder) ->
                 builder.format("Min: ", ChatFormatting.WHITE)
                         .format(formatXYZPosition(aabb.minX, aabb.minY, aabb.minZ))
                         .format(NEWLINE)
@@ -30,15 +30,15 @@ public class TypeFormatters {
                         .build()
         ));
 
-        TypeFormatterRegistry.registerFormatter(Vec3.class, ((vec3, builder) ->
+        FormatRegistry.registerFormatter(Vec3.class, ((vec3, builder) ->
                 builder.format(formatVec3(vec3)).build()
         ));
 
-        TypeFormatterRegistry.registerFormatter(Quaterniond.class, (qdc, builder) ->
+        FormatRegistry.registerFormatter(Quaterniond.class, (qdc, builder) ->
                 builder.format(formatQuaternion(qdc)).build()
         );
 
-        TypeFormatterRegistry.registerFormatter(ChunkClaimImpl.class, (cc, builder) ->
+        FormatRegistry.registerFormatter(ChunkClaimImpl.class, (cc, builder) ->
                 builder.format("Start: ", ChatFormatting.WHITE)
                         .format(formatXZPosition(cc.getXStart(), cc.getZStart()))
                         .format(NEWLINE)
@@ -53,7 +53,7 @@ public class TypeFormatters {
                         .build()
         );
 
-        TypeFormatterRegistry.registerFormatter(BodyKinematicsImpl.class, (bk, builder) ->
+        FormatRegistry.registerFormatter(BodyKinematicsImpl.class, (bk, builder) ->
                 builder.format("Position: ", ChatFormatting.WHITE)
                         .format(formatXYZ(bk.getPosition()))
                         .format(NEWLINE)

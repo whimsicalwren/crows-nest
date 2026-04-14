@@ -1,4 +1,4 @@
-package dev.wren.crowsnest.internal;
+package dev.wren.crowsnest.internal.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -9,7 +9,7 @@ import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 
-public class Utility {
+public class Util {
 
     public static Long getShipIdAtPos(Level level, BlockPos pos) {
         LoadedShip loadedShip = VSGameUtilsKt.getLoadedShipManagingPos(level, pos);
