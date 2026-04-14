@@ -32,6 +32,10 @@ public final class CommandRegistry {
         public void send(Object content) {
             stack.sendSuccess(() -> Component.literal(content.toString()), false);
         }
+
+        public void send(Component content) {
+            stack.sendSuccess(() -> content, false);
+        }
     }
 
     public record TypeCommandDef<T, R>(String name, Class<T> sourceType, Class<R> returnType, Function<T, R> resultGetter, BiConsumer<T, CommandSourceStackWrapper> sender) { }
@@ -46,16 +50,16 @@ public final class CommandRegistry {
             this.type = type;
         }
 
-        public <R> TypeNodeBuilder<T> command(String name, Class<R> returnType, Function<T, R> resultGetter) {
-            return command(name, returnType, resultGetter, null);
+        public <R> TypeNodeBuilder<T> command(String name, Class<R> returnType, Function<T, R> getter) {
+            return command(name, returnType, getter, (t, stack) -> stack.send(FormatRegistry.format(getter.apply(t))));
         }
 
         public TypeNodeBuilder<T> command(String name, BiConsumer<T, CommandSourceStackWrapper> sender) {
             return command(name, Void.class, null, sender);
         }
 
-        public <R> TypeNodeBuilder<T> command(String name, Function<T, R> contentGetter) {
-            return command(name, Void.class, null, (t, stack) -> stack.send(contentGetter.apply(t)));
+        public <R> TypeNodeBuilder<T> command(String name, Function<T, R> getter) {
+            return command(name, Void.class, null, (t, stack) -> stack.send(FormatRegistry.format(getter.apply(t))));
         }
 
         public <R> TypeNodeBuilder<T> command(String name, Class<R> returnType, Function<T, R> resultGetter, BiConsumer<T, CommandSourceStackWrapper> sender) {
@@ -110,9 +114,6 @@ public final class CommandRegistry {
             T value = ValueUtil.getAs(def.sourceType);
 
             if (def.sender != null) {
-                System.out.println(value.toString());
-                System.out.println(value.getClass());
-
                 def.sender.accept(value, new CommandSourceStackWrapper(ctx.getSource()));
             }
 
