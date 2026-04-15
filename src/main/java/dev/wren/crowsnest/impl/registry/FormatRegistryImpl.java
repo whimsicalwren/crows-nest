@@ -88,34 +88,34 @@ public class FormatRegistryImpl {
                 builder.format(formatVec3(vec3)).build()
         ));
 
-        FormatRegistry.registerFormat(Quaterniond.class, (qdc, builder) ->
-                builder.format(formatQuaternion(qdc)).build()
+        FormatRegistry.registerFormat(Quaterniond.class, (qd, builder) ->
+                builder.format(formatQuaternion(qd)).build()
         );
 
         FormatRegistry.registerFormat(Matrix4d.class, (m4d, builder) ->
                 builder.format(SPLIT)
-                        .format(m4d.m00(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m10(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m20(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m30(), 8, ChatFormatting.WHITE).format(SPLIT)
+                        .format(m4d.m00(), ChatFormatting.RED).format(SPLIT)
+                        .format(m4d.m10(), ChatFormatting.YELLOW).format(SPLIT)
+                        .format(m4d.m20(), ChatFormatting.GREEN).format(SPLIT)
+                        .format(m4d.m30(), ChatFormatting.BLUE).format(SPLIT)
                         .format(NEWLINE)
                         .format(SPLIT)
-                        .format(m4d.m01(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m11(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m21(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m31(), 8, ChatFormatting.WHITE).format(SPLIT)
+                        .format(m4d.m01(), ChatFormatting.RED).format(SPLIT)
+                        .format(m4d.m11(), ChatFormatting.YELLOW).format(SPLIT)
+                        .format(m4d.m21(), ChatFormatting.GREEN).format(SPLIT)
+                        .format(m4d.m31(), ChatFormatting.BLUE).format(SPLIT)
                         .format(NEWLINE)
                         .format(SPLIT)
-                        .format(m4d.m02(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m12(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m22(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m32(), 8, ChatFormatting.WHITE).format(SPLIT)
+                        .format(m4d.m02(), ChatFormatting.RED).format(SPLIT)
+                        .format(m4d.m12(), ChatFormatting.YELLOW).format(SPLIT)
+                        .format(m4d.m22(), ChatFormatting.GREEN).format(SPLIT)
+                        .format(m4d.m32(), ChatFormatting.BLUE).format(SPLIT)
                         .format(NEWLINE)
                         .format(SPLIT)
-                        .format(m4d.m03(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m13(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m23(), 8, ChatFormatting.WHITE).format(SPLIT)
-                        .format(m4d.m33(), 8, ChatFormatting.WHITE).format(SPLIT)
+                        .format(m4d.m03(), ChatFormatting.RED).format(SPLIT)
+                        .format(m4d.m13(), ChatFormatting.YELLOW).format(SPLIT)
+                        .format(m4d.m23(), ChatFormatting.GREEN).format(SPLIT)
+                        .format(m4d.m33(), ChatFormatting.BLUE).format(SPLIT)
                         .build()
         );
     }

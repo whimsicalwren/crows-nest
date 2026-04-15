@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static dev.wren.crowsnest.internal.util.FormatUtil.forceLength;
+import static dev.wren.crowsnest.internal.util.FormatUtil.formatSci;
 
 public class FormatRegistry {
 
@@ -24,17 +24,15 @@ public class FormatRegistry {
     public static Component format(Object object) {
         if (object == null) return Component.literal("null");
 
-        Class<?> objClass = object.getClass();
-
         Component formatted;
 
-        Function<Object, Component> formatter = FORMATTERS.get(objClass);
+        Function<Object, Component> formatter = FORMATTERS.get(object.getClass());
         if (formatter != null)
             formatted = formatter.apply(object);
         else
             formatted = Component.literal(object.toString());
 
-        return Component.literal(object.getClass().getCanonicalName() + "\n").append(formatted);
+        return Component.literal("Type: " + object.getClass().getSimpleName() + "\n").append(formatted);
     }
 
     public record Format(String content, ChatFormatting... formats) {
@@ -64,18 +62,8 @@ public class FormatRegistry {
             return this;
         }
 
-        public FormatBuilder format(Number content, ChatFormatting... formats) {
-            formatList.add(Format.of(String.valueOf(content), formats));
-            return this;
-        }
-
-        public FormatBuilder format(Number content, int forcedLength, ChatFormatting... formats) {
-            formatList.add(Format.of(forceLength(String.valueOf(content), forcedLength), formats));
-            return this;
-        }
-
-        public FormatBuilder format(String content, int forcedLength, ChatFormatting... formats) {
-            formatList.add(Format.of(forceLength(content, forcedLength), formats));
+        public FormatBuilder format(double content, ChatFormatting... formats) {
+            formatList.add(Format.of(formatSci(content), formats));
             return this;
         }
 

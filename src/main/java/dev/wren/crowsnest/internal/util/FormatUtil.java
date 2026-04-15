@@ -159,11 +159,8 @@ public class FormatUtil {
         return () -> Component.literal(literalString.toString());
     }
 
-    public static String forceLength(String base, int length) {
-        int diff = base.length() - length;
-        if (diff < 1) return base;
-        String append = new String(new char[diff]).replace("\0", " ");
-        return base + append;
+    public static String formatSci(double value) {
+        return String.format("% 10.3E", value);
     }
 
 }
