@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import static dev.wren.crowsnest.internal.util.FormatUtil.forceLength;
+
 public class FormatRegistry {
 
     private static final Map<Class<?>, Function<Object, Component>> FORMATTERS = new HashMap<>();
@@ -24,7 +26,7 @@ public class FormatRegistry {
 
         Class<?> objClass = object.getClass();
 
-        Component formatted = null;
+        Component formatted;
 
         Function<Object, Component> formatter = FORMATTERS.get(objClass);
         if (formatter != null)
@@ -59,6 +61,21 @@ public class FormatRegistry {
 
         public FormatBuilder format(String content, ChatFormatting... formats) {
             formatList.add(Format.of(content, formats));
+            return this;
+        }
+
+        public FormatBuilder format(Number content, ChatFormatting... formats) {
+            formatList.add(Format.of(String.valueOf(content), formats));
+            return this;
+        }
+
+        public FormatBuilder format(Number content, int forcedLength, ChatFormatting... formats) {
+            formatList.add(Format.of(forceLength(String.valueOf(content), forcedLength), formats));
+            return this;
+        }
+
+        public FormatBuilder format(String content, int forcedLength, ChatFormatting... formats) {
+            formatList.add(Format.of(forceLength(content, forcedLength), formats));
             return this;
         }
 

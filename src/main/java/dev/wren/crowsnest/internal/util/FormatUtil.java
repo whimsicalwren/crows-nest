@@ -130,6 +130,8 @@ public class FormatUtil {
 
     public static FormatRegistry.Format SEP = of(", ", ChatFormatting.WHITE);
 
+    public static FormatRegistry.Format SPLIT = of(" | ", ChatFormatting.WHITE);
+
     private static final DecimalFormat NORMAL_FORMAT = new DecimalFormat("#,##0.###");
 
     private static final DecimalFormat SMALL_FORMAT = new DecimalFormat("0.#####");
@@ -155,6 +157,13 @@ public class FormatUtil {
 
     public static Supplier<Component> l(Object literalString) {
         return () -> Component.literal(literalString.toString());
+    }
+
+    public static String forceLength(String base, int length) {
+        int diff = base.length() - length;
+        if (diff < 1) return base;
+        String append = new String(new char[diff]).replace("\0", " ");
+        return base + append;
     }
 
 }

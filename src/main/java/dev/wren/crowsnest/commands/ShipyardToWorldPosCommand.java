@@ -1,6 +1,5 @@
 package dev.wren.crowsnest.commands;
 
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 
 import net.minecraft.commands.CommandSourceStack;
@@ -27,8 +26,7 @@ public class ShipyardToWorldPosCommand {
             );
     }
 
-    static String formatBlockPos(BlockPos pos) {
+    private static String formatBlockPos(BlockPos pos) {
         return "("+pos.getX()+", "+pos.getY()+", "+pos.getZ()+")";
     }
-
 }

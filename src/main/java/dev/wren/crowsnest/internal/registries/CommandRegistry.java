@@ -2,7 +2,7 @@ package dev.wren.crowsnest.internal.registries;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import dev.wren.crowsnest.internal.util.ValueUtil;
+import dev.wren.crowsnest.internal.util.ThreadValue;
 import kotlin.jvm.JvmClassMappingKt;
 import kotlin.reflect.KClass;
 import kotlin.reflect.KProperty;
@@ -203,11 +203,11 @@ public final class CommandRegistry {
 
     private static <T, R> void attachRedirect(LiteralArgumentBuilder<CommandSourceStack> command, TypeCommandDef<T, R> def) {
         command.redirect(BUILT.get(def.returnType), ctx -> {
-            T value = ValueUtil.getAs(def.sourceType);
+            T value = ThreadValue.getAs(def.sourceType);
 
             R result = def.resultGetter.apply(value);
 
-            ValueUtil.set(result);
+            ThreadValue.set(result);
 
             return ctx.getSource();
         });
@@ -215,7 +215,7 @@ public final class CommandRegistry {
 
     private static <T, R> void attachExecutes(LiteralArgumentBuilder<CommandSourceStack> command, TypeCommandDef<T, R> def) {
         command.executes(ctx -> {
-            T value = ValueUtil.getAs(def.sourceType);
+            T value = ThreadValue.getAs(def.sourceType);
 
             if (def.sender != null) {
                 def.sender.accept(value, new CommandSourceStackWrapper(ctx.getSource()));

@@ -15,6 +15,10 @@ public class ConverterRegistry {
         RESULTS.put(from, to);
     }
 
+    public static <F, T extends F> void registerCast(Class<F> from, Class<T> to) {
+        registerConverter(from, to, to::cast);
+    }
+
     @SuppressWarnings("unchecked")
     public static <F, T> Function<F, T> getConverter(Class<F> type) {
         for (Map.Entry<Class<?>, Function<?, ?>> entry : CONVERTERS.entrySet()) {
@@ -30,9 +34,6 @@ public class ConverterRegistry {
         return (Class<T>) RESULTS.get(type);
     }
 
-    public static <F> boolean shouldConvert(Class<F> type) {
-        return RESULTS.containsKey(type);
-    }
 
     public static <F, T> T convert(F from, Class<F> fClass) {
         Function<F, T> converter = getConverter(fClass);

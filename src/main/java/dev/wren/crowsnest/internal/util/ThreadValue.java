@@ -1,6 +1,6 @@
 package dev.wren.crowsnest.internal.util;
 
-public class ValueUtil {
+public class ThreadValue {
 
     private static final ThreadLocal<Object> CURRENT = new ThreadLocal<>();
 
