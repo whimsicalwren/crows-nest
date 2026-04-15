@@ -57,11 +57,11 @@ public final class CommandRegistry {
         }
 
         public <R> TypeNodeBuilder<T> fromMethod(String name, Class<R> returnType, Function<T, R> getter) {
-            return command(name, returnType, getter, (t, stack) -> stack.send(FormatRegistry.format(getter.apply(t))));
+            return command(name, returnType, getter, (t, stack) -> stack.send(FormatRegistry.format(getter.apply(t), name)));
         }
 
         public <R> TypeNodeBuilder<T> fromField(String name, Function<T, R> getter) {
-            return command(name, Void.class, null, (t, stack) -> stack.send(FormatRegistry.format(getter.apply(t))));
+            return command(name, Void.class, null, (t, stack) -> stack.send(FormatRegistry.format(getter.apply(t), name)));
         }
 
         public <R> TypeNodeBuilder<T> command(String name, Class<R> returnType, Function<T, R> resultGetter, BiConsumer<T, CommandSourceStackWrapper> sender) {

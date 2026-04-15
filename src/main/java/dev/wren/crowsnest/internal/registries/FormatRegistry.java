@@ -21,7 +21,7 @@ public class FormatRegistry {
         FORMATTERS.put(type, object -> formatter.apply(type.cast(object), new FormatBuilder()));
     }
 
-    public static Component format(Object object) {
+    public static Component format(Object object, String commandName) {
         if (object == null) return Component.literal("null");
 
         Component formatted;
@@ -32,7 +32,7 @@ public class FormatRegistry {
         else
             formatted = Component.literal(object.toString());
 
-        return Component.literal("Type: " + object.getClass().getSimpleName() + "\n").append(formatted);
+        return Component.literal(commandName + " returned value of type: " + object.getClass().getSimpleName() + "\n").append(formatted);
     }
 
     public record Format(String content, ChatFormatting... formats) {
