@@ -15,7 +15,7 @@ public class CrowsNestCommands {
         LiteralArgumentBuilder<CommandSourceStack> clientRoot = Commands.literal("crowsnest")
             .then(ShipyardToWorldPosCommand.register())
             .then(ShipInfoCommand.register())
-            .executes(ctx -> { try { return 1; } finally { ThreadValue.clear(); } }) // have fun reading this
+            .then(ValueClearCommand.register())
             ;
 
         LiteralCommandNode<CommandSourceStack> clientRootNode = event.getDispatcher().register(clientRoot);
