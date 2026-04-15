@@ -3,6 +3,7 @@ package dev.wren.crowsnest.internal.registries;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import org.valkyrienskies.core.impl.shadow.An;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,13 +36,32 @@ public class FormatRegistry {
         return Component.literal(commandName + " returned value of type: " + object.getClass().getSimpleName() + "\n").append(formatted);
     }
 
-    public record Format(String content, ChatFormatting... formats) {
+    public static Component format(Object object) {
+        if (object == null) return Component.literal("null");
+
+        Component formatted;
+
+        Function<Object, Component> formatter = FORMATTERS.get(object.getClass());
+        if (formatter != null)
+            formatted = formatter.apply(object);
+        else
+            formatted = Component.literal(object.toString());
+
+        return Component.literal("Type: " + object.getClass().getSimpleName() + "\n").append(formatted);
+    }
+
+
+    public record Format(Component component) {
         public static Format of(String content, ChatFormatting... formats) {
-            return new Format(content, formats);
+            return new Format(Component.literal(content).withStyle(formats));
         }
 
         public static Format of(Component content, ChatFormatting... formats) {
-            return new Format(content.getString(), formats);
+            return new Format(Component.literal(content.getString()).withStyle(formats));
+        }
+
+        public static Format of(Component base) {
+            return new Format(base);
         }
     }
 
@@ -67,10 +87,15 @@ public class FormatRegistry {
             return this;
         }
 
+        public FormatBuilder format(Component base) {
+            formatList.add(Format.of(base));
+            return this;
+        }
+
         public Component build() {
             MutableComponent initial = Component.literal("");
             for (Format format : this.formatList) {
-                initial.append(Component.literal(format.content()).withStyle(format.formats()));
+                initial.append(format.component());
             }
 
             return initial;

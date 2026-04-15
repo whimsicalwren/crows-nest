@@ -13,6 +13,8 @@ import org.valkyrienskies.core.impl.bodies.properties.BodyTransformImpl;
 import org.valkyrienskies.core.impl.chunk_tracking.ShipActiveChunksSet;
 import org.valkyrienskies.core.impl.game.ChunkClaimImpl;
 
+import java.util.ArrayList;
+
 import static dev.wren.crowsnest.internal.util.FormatUtil.*;
 
 public class FormatRegistryImpl {
@@ -118,5 +120,14 @@ public class FormatRegistryImpl {
                         .format(m4d.m33(), ChatFormatting.BLUE).format(SPLIT)
                         .build()
         );
+
+        FormatRegistry.registerFormat(ArrayList.class, (itr, builder) -> {
+            itr.forEach(e ->
+                    builder.format(FormatRegistry.format(e))
+                    .format(NEWLINE)
+            );
+
+            return builder.build();
+        });
     }
 }

@@ -155,6 +155,9 @@ public final class CommandRegistry {
             "getClass", "hashCode", "toString", "notifyAll", "notify",
             "toBuilder", "wait", "toVector3f", "toLong");
 
+    private static final List<String> operatorCommands = List.of(
+        "enableDrag", "disableDrag", "enableLift", "disableLift", "enableRotDrag", "disableRotDrag"
+    );
 
     public static boolean isKotlinDeprecated(Method method) {
         KClass<?> kClass = JvmClassMappingKt.getKotlinClass(method.getDeclaringClass());
@@ -191,6 +194,8 @@ public final class CommandRegistry {
             for (TypeCommandDef<?, ?> def : builder.getCommands()) {
 
                 LiteralArgumentBuilder<CommandSourceStack> cmd = Commands.literal(def.name);
+
+                if (operatorCommands.contains(def.name)) cmd.requires(ctx -> ctx.hasPermission(2));
 
                 if (def.returnType != Void.class) attachRedirect(cmd, def);
 

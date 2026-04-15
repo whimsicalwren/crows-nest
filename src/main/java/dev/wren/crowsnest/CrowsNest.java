@@ -1,17 +1,19 @@
 package dev.wren.crowsnest;
 
+import dev.wren.crowsnest.commands.CrowsNestCommands;
 import dev.wren.crowsnest.impl.registry.CommandRegistryImpl;
 import dev.wren.crowsnest.impl.registry.ConverterRegistryImpl;
 import dev.wren.crowsnest.impl.registry.FormatRegistryImpl;
 import dev.wren.crowsnest.internal.registries.CommandRegistry;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import dev.wren.crowsnest.commands.CrowsNestCommands;
 
 @Mod(CrowsNest.MODID)
 @SuppressWarnings("unused")
@@ -27,9 +29,15 @@ public class CrowsNest {
 
         CommandRegistry.buildAll();
 
-        MinecraftForge.EVENT_BUS.addListener(CrowsNestCommands::registerClient);
+        MinecraftForge.EVENT_BUS.addListener(CrowsNest::registerCommands);
+
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> CrowsNestClient::init);
 
         LOGGER.info("{} ({}) initialized!", NAME, MODID);
+    }
+
+    public static void registerCommands(RegisterCommandsEvent event) {
+        CrowsNestCommands.register(event.getDispatcher());
     }
 
 }

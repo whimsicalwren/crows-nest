@@ -1,9 +1,11 @@
 package dev.wren.crowsnest.internal.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
 import org.joml.Vector3d;
+import org.valkyrienskies.core.api.ships.LoadedServerShip;
 import org.valkyrienskies.core.api.ships.LoadedShip;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
@@ -17,6 +19,10 @@ public class Util {
     }
 
     public static LoadedShip getShipAtPos(Level level, BlockPos pos) {
+        return VSGameUtilsKt.getLoadedShipManagingPos(level, pos);
+    }
+
+    public static LoadedServerShip getServerShipAtPos(ServerLevel level, BlockPos pos) {
         return VSGameUtilsKt.getLoadedShipManagingPos(level, pos);
     }
 

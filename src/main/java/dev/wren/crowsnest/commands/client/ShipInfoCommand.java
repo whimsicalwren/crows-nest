@@ -1,4 +1,4 @@
-package dev.wren.crowsnest.commands;
+package dev.wren.crowsnest.commands.client;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
 

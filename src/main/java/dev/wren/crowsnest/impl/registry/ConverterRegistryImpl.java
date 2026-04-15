@@ -10,11 +10,17 @@ import org.joml.primitives.AABBic;
 import dev.wren.crowsnest.internal.registries.ConverterRegistry;
 import org.valkyrienskies.core.api.bodies.properties.BodyKinematics;
 import org.valkyrienskies.core.api.bodies.properties.BodyTransform;
+import org.valkyrienskies.core.api.ships.DragController;
+import org.valkyrienskies.core.api.ships.WingManager;
 import org.valkyrienskies.core.api.ships.properties.ChunkClaim;
+import org.valkyrienskies.core.api.ships.properties.ShipInertiaData;
 import org.valkyrienskies.core.api.ships.properties.ShipTransform;
 import org.valkyrienskies.core.impl.bodies.properties.BodyKinematicsImpl;
 import org.valkyrienskies.core.impl.bodies.properties.BodyTransformImpl;
 import org.valkyrienskies.core.impl.game.ChunkClaimImpl;
+import org.valkyrienskies.core.impl.game.ships.ShipInertiaDataImpl;
+import org.valkyrienskies.core.impl.shadow.Eh;
+import org.valkyrienskies.core.impl.shadow.Ew;
 
 public class ConverterRegistryImpl {
 
@@ -28,6 +34,9 @@ public class ConverterRegistryImpl {
         ConverterRegistry.registerCast(BodyTransform.class, BodyTransformImpl.class);
         ConverterRegistry.registerCast(Matrix4dc.class, Matrix4d.class);
         ConverterRegistry.registerCast(Quaterniondc.class, Quaterniond.class);
+        ConverterRegistry.registerCast(DragController.class, Eh.class);
+        ConverterRegistry.registerCast(WingManager.class, Ew.class);
+        ConverterRegistry.registerCast(ShipInertiaData.class, ShipInertiaDataImpl.class);
     }
 
 }
