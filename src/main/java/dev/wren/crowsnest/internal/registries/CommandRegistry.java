@@ -94,14 +94,9 @@ public final class CommandRegistry {
     public static <T, CF, CT> void registerNoParamMethods(Class<T> tClass) {
         TypeNodeBuilder<T> tNodeBuilder = node(tClass);
 
-        System.out.println(tClass.getSimpleName());
-
         for (Method method : tClass.getMethods()) {
             if (!(method.getParameterCount() == 0)) continue;
             if (!isMethodValid(method)) continue;
-
-            System.out.println(method.getName());
-            System.out.println(Arrays.toString(method.getAnnotations()));
 
             boolean sameType = tClass.equals(method.getReturnType());
 
