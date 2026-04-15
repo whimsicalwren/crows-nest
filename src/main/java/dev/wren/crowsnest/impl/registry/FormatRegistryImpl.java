@@ -15,7 +15,7 @@ import static dev.wren.crowsnest.internal.util.FormatUtil.*;
 public class FormatRegistryImpl {
 
     public static void register() {
-        FormatRegistry.registerFormatter(AABB.class, ((aabb, builder) ->
+        FormatRegistry.registerFormat(AABB.class, ((aabb, builder) ->
                 builder.format("Min: ", ChatFormatting.WHITE)
                         .format(formatXYZPosition(aabb.minX, aabb.minY, aabb.minZ))
                         .format(NEWLINE)
@@ -30,15 +30,15 @@ public class FormatRegistryImpl {
                         .build()
         ));
 
-        FormatRegistry.registerFormatter(Vec3.class, ((vec3, builder) ->
+        FormatRegistry.registerFormat(Vec3.class, ((vec3, builder) ->
                 builder.format(formatVec3(vec3)).build()
         ));
 
-        FormatRegistry.registerFormatter(Quaterniond.class, (qdc, builder) ->
+        FormatRegistry.registerFormat(Quaterniond.class, (qdc, builder) ->
                 builder.format(formatQuaternion(qdc)).build()
         );
 
-        FormatRegistry.registerFormatter(ChunkClaimImpl.class, (cc, builder) ->
+        FormatRegistry.registerFormat(ChunkClaimImpl.class, (cc, builder) ->
                 builder.format("Start: ", ChatFormatting.WHITE)
                         .format(formatXZPosition(cc.getXStart(), cc.getZStart()))
                         .format(NEWLINE)
@@ -53,7 +53,7 @@ public class FormatRegistryImpl {
                         .build()
         );
 
-        FormatRegistry.registerFormatter(BodyKinematicsImpl.class, (bk, builder) ->
+        FormatRegistry.registerFormat(BodyKinematicsImpl.class, (bk, builder) ->
                 builder.format("Position: ", ChatFormatting.WHITE)
                         .format(formatXYZ(bk.getPosition()))
                         .format(NEWLINE)

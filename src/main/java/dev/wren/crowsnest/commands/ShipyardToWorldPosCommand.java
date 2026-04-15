@@ -20,9 +20,9 @@ public class ShipyardToWorldPosCommand {
                     BlockPos localPos = BlockPosArgument.getBlockPos(ctx, "pos");
                     BlockPos worldPos = Util.getWorldPos(ctx.getSource().getUnsidedLevel(), localPos);
 
-                    ctx.getSource().sendSuccess(() -> Component.literal("Shipyard position " + formatBlockPos(localPos) + " corresponds to world position " + formatBlockPos(worldPos)), false);
+                    ctx.getSource().sendSuccess(() -> Component.literal("Shipyard position " + formatBlockPos(localPos) + " translates to world position " + formatBlockPos(worldPos)), false);
 
-                    return Command.SINGLE_SUCCESS;
+                    return 1;
                 })
             );
     }

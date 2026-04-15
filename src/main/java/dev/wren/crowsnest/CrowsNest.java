@@ -27,8 +27,8 @@ public class CrowsNest {
 
         CommandRegistry.buildAll();
 
-        MinecraftForge.EVENT_BUS.addListener(CrowsNestCommands::register);
         MinecraftForge.EVENT_BUS.addListener(CrowsNestCommands::registerClient);
+        MinecraftForge.EVENT_BUS.addListener(CrowsNestCommands::register);
 
         LOGGER.info("{} ({}) initialized!", NAME, MODID);
     }

@@ -11,15 +11,11 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static dev.wren.crowsnest.CrowsNest.LOGGER;
-
 public class FormatRegistry {
 
     private static final Map<Class<?>, Function<Object, Component>> FORMATTERS = new HashMap<>();
 
-    public static <T> void registerFormatter(Class<T> type, BiFunction<T, FormatBuilder, Component> formatter) {
-        LOGGER.info("Registering formatter for {}", type.getCanonicalName());
-
+    public static <T> void registerFormat(Class<T> type, BiFunction<T, FormatBuilder, Component> formatter) {
         FORMATTERS.put(type, object -> formatter.apply(type.cast(object), new FormatBuilder()));
     }
 
@@ -28,11 +24,15 @@ public class FormatRegistry {
 
         Class<?> objClass = object.getClass();
 
+        Component formatted = null;
+
         Function<Object, Component> formatter = FORMATTERS.get(objClass);
         if (formatter != null)
-            return formatter.apply(object);
+            formatted = formatter.apply(object);
+        else
+            formatted = Component.literal(object.toString());
 
-        return Component.literal(object.toString());
+        return Component.literal(object.getClass().getCanonicalName() + "\n").append(formatted);
     }
 
     public record Format(String content, ChatFormatting... formats) {

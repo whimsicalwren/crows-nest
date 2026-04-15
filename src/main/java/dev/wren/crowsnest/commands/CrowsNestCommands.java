@@ -24,6 +24,12 @@ public class CrowsNestCommands {
     }
 
     public static void register(RegisterCommandsEvent event) {
+        LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("crowsnestserver")
+            .executes(ctx -> { try { return 1; } finally { ValueUtil.clear(); } })
+            ;
 
+        LiteralCommandNode<CommandSourceStack> rootNode = event.getDispatcher().register(root);
+
+        event.getDispatcher().register(Commands.literal("cns").redirect(rootNode));
     }
 }

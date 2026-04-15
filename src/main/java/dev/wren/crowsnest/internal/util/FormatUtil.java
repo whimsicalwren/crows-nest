@@ -46,10 +46,10 @@ public class FormatUtil {
                 of(formatNumber(qdc.z()), ChatFormatting.BLUE),
                 SEP,
                 of("W: ", ChatFormatting.WHITE),
-                of(formatNumber(qdc.w()), ChatFormatting.YELLOW),
+                of(formatNumber(qdc.w()), ChatFormatting.GOLD),
                 NEWLINE,
                 of("Angle: ", ChatFormatting.WHITE),
-                of(formatNumber(qdc.angle()), ChatFormatting.GOLD)
+                of(formatNumber(qdc.angle()), ChatFormatting.YELLOW)
         };
     }
 
@@ -90,7 +90,7 @@ public class FormatUtil {
                 of(formatNumber(z), ChatFormatting.BLUE),
                 SEP,
                 of("W: ", ChatFormatting.WHITE),
-                of(formatNumber(w), ChatFormatting.YELLOW)
+                of(formatNumber(w), ChatFormatting.GOLD)
         };
     }
 

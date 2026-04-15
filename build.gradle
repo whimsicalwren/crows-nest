@@ -127,6 +127,8 @@ dependencies {
     implementation "org.joml:joml:1.10.5"
     implementation "com.fasterxml.jackson.core:jackson-annotations:2.13.3"
     implementation 'thedarkcolour:kotlinforforge:4.10.0'
+
+    implementation "org.jetbrains.kotlin:kotlin-reflect:2.3.20"
 }
 
 configurations {

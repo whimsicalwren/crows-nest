@@ -3,11 +3,13 @@ package dev.wren.crowsnest.commands;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 
 import dev.wren.crowsnest.internal.registries.CommandRegistry;
+import dev.wren.crowsnest.internal.util.Util;
 import dev.wren.crowsnest.internal.util.ValueUtil;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 
+import net.minecraft.core.BlockPos;
 import org.valkyrienskies.core.api.ships.LoadedShip;
 
 /**
@@ -18,9 +20,16 @@ public class ShipInfoCommand {
 
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("ship")
-                .then(Commands.argument("pos", BlockPosArgument.blockPos())
-                        .redirect(CommandRegistry.getBuiltNode(LoadedShip.class), ValueUtil::setToShip)
-                );
+            .then(Commands.argument("pos", BlockPosArgument.blockPos())
+                .redirect(CommandRegistry.getBuiltNode(LoadedShip.class), ctx -> {
+                    BlockPos pos = BlockPosArgument.getBlockPos(ctx, "pos");
+                    LoadedShip ship = Util.getShipAtPos(ctx.getSource().getUnsidedLevel(), pos);
+
+                    ValueUtil.set(ship);
+
+                    return ctx.getSource();
+                })
+            );
     }
 
 }
