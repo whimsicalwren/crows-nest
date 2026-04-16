@@ -24,10 +24,10 @@ public class CrowsNest {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public CrowsNest(FMLJavaModLoadingContext context) {
-        AllArguments.register();
         AllConverters.register();
-        AllCommands.register();
+        AllArguments.register();
         AllFormats.register();
+        AllCommands.register();
 
         CommandRegistry.buildAll();
 

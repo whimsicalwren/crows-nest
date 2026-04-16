@@ -16,7 +16,6 @@ public class CrowsNestCommands {
         LiteralArgumentBuilder<CommandSourceStack> clientRoot = Commands.literal("crowsnest")
                 .then(ShipyardToWorldPosCommand.register())
                 .then(ShipInfoCommand.register())
-                .then(Vec3InfoCommand.register())
                 .then(ValueClearCommand.register())
                 ;
 

@@ -39,7 +39,6 @@ public class AllCommands {
         CommandRegistry.registerClass(Matrix3d.class);
         CommandRegistry.registerClass(AABB.class);
         CommandRegistry.registerClass(Vec3.class);
-        CommandRegistry.registerMethods(Vec3.class);
         CommandRegistry.registerClass(Quaterniond.class);
         CommandRegistry.registerClass(ArrayList.class);
     }

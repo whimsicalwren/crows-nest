@@ -42,7 +42,7 @@ public final class CommandRegistry {
         NodeBuilder<T> tNodeBuilder = node(tClass);
 
         for (Field field : tClass.getFields()) {
-            if (!isInvalid(field)) continue;
+            if (isInvalid(field)) continue;
 
             boolean sameType = tClass.equals(field.getType());
 
@@ -178,7 +178,7 @@ public final class CommandRegistry {
     private static final List<String> nameBlackList = List.of("getClass", "hashCode", "toString", "notifyAll", "notify", "wait", "equals", "CODEC", "codec");
 
     private static final List<String> nameAndClassBlacklist = List.of(
-            "Eh.b", "Vec3#toVector3f", "LoadedShip#getTransformProvider"
+            "Eh.b", "Vec3#toVector3f", "LoadedShip#getTransformProvider", "BodyTransformImpl#toBuilder"
     );
 
     private static final List<String> operatorCommands = List.of(
@@ -221,6 +221,7 @@ public final class CommandRegistry {
     public static <T> void registerClass(Class<T> tClass) {
         registerFields(tClass);
         registerNoParamMethods(tClass);
+        registerMethods(tClass);
     }
 
     public static void buildAll() {
@@ -278,14 +279,6 @@ public final class CommandRegistry {
 
         return toReturn;
     }
-
-    private static ArgumentBuilder<CommandSourceStack, ?> attachArgument(ArgumentBuilder<CommandSourceStack, ?> command, String name, ArgumentType<?> argumentType) {
-        ArgumentBuilder<CommandSourceStack, ?> arg = Commands.argument(name, argumentType);
-
-        command.then(arg);
-        return arg;
-    }
-
 
     private static <T, R> void attachRedirect(ArgumentBuilder<CommandSourceStack, ?> command, CommandDef<T, R> def) {
         command.redirect(BUILT.get(def.returnType()), ctx -> {
