@@ -2,7 +2,7 @@ package dev.wren.crowsnest.commands.client;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
 
-import dev.wren.crowsnest.internal.registries.CommandRegistry;
+import dev.wren.crowsnest.internal.command.CommandRegistry;
 import dev.wren.crowsnest.internal.util.Util;
 import dev.wren.crowsnest.internal.util.ThreadValue;
 import net.minecraft.commands.CommandSourceStack;

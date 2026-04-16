@@ -1,6 +1,6 @@
-package dev.wren.crowsnest.impl.registry;
+package dev.wren.crowsnest.index;
 
-import dev.wren.crowsnest.internal.registries.CommandRegistry;
+import dev.wren.crowsnest.internal.command.CommandRegistry;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3d;
@@ -16,7 +16,9 @@ import org.valkyrienskies.core.impl.game.ships.ShipInertiaDataImpl;
 import org.valkyrienskies.core.impl.shadow.Eh;
 import org.valkyrienskies.core.impl.shadow.Ew;
 
-public class CommandRegistryImpl {
+import java.util.ArrayList;
+
+public class AllCommands {
 
     public static void register() {
         // vs stuff
@@ -37,7 +39,9 @@ public class CommandRegistryImpl {
         CommandRegistry.registerClass(Matrix3d.class);
         CommandRegistry.registerClass(AABB.class);
         CommandRegistry.registerClass(Vec3.class);
+        CommandRegistry.registerMethods(Vec3.class);
         CommandRegistry.registerClass(Quaterniond.class);
+        CommandRegistry.registerClass(ArrayList.class);
     }
 
 }

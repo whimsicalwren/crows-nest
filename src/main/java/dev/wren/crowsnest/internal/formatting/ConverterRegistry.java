@@ -1,4 +1,4 @@
-package dev.wren.crowsnest.internal.registries;
+package dev.wren.crowsnest.internal.formatting;
 
 import java.util.HashMap;
 import java.util.Map;

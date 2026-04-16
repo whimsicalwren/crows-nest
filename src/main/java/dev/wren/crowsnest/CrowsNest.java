@@ -1,10 +1,11 @@
 package dev.wren.crowsnest;
 
 import dev.wren.crowsnest.commands.CrowsNestCommands;
-import dev.wren.crowsnest.impl.registry.CommandRegistryImpl;
-import dev.wren.crowsnest.impl.registry.ConverterRegistryImpl;
-import dev.wren.crowsnest.impl.registry.FormatRegistryImpl;
-import dev.wren.crowsnest.internal.registries.CommandRegistry;
+import dev.wren.crowsnest.index.AllArguments;
+import dev.wren.crowsnest.index.AllCommands;
+import dev.wren.crowsnest.index.AllConverters;
+import dev.wren.crowsnest.index.AllFormats;
+import dev.wren.crowsnest.internal.command.CommandRegistry;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -23,9 +24,10 @@ public class CrowsNest {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public CrowsNest(FMLJavaModLoadingContext context) {
-        ConverterRegistryImpl.register();
-        CommandRegistryImpl.register();
-        FormatRegistryImpl.register();
+        AllArguments.register();
+        AllConverters.register();
+        AllCommands.register();
+        AllFormats.register();
 
         CommandRegistry.buildAll();
 
