@@ -229,8 +229,10 @@ public final class CommandRegistry {
         BUILDERS.forEach((type, builder) -> {
             LiteralCommandNode<CommandSourceStack> node = BUILT.get(type);
 
+            Map<String, ArgumentBuilder<CommandSourceStack, ?>> commands = new HashMap<>();
+
             for (CommandDef<?, ?> def : builder.getCommands()) {
-                ArgumentBuilder<CommandSourceStack, ?> cmd = Commands.literal(def.name());
+                ArgumentBuilder<CommandSourceStack, ?> cmd = commands.computeIfAbsent(def.name(), Commands::literal);
 
                 String nameAndClass = def.sourceType().getSimpleName() + "#" + def.name();
 
@@ -245,7 +247,9 @@ public final class CommandRegistry {
                 } else {
                     cmd.then(arguments);
                 }
+            }
 
+            for (ArgumentBuilder<CommandSourceStack, ?> cmd : commands.values()) {
                 node.addChild(cmd.build());
             }
         });

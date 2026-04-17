@@ -40,7 +40,6 @@ public class AllCommands {
         CommandRegistry.registerClass(AABB.class);
         CommandRegistry.registerClass(Vec3.class);
         CommandRegistry.registerClass(Quaterniond.class);
-        CommandRegistry.registerClass(ArrayList.class);
     }
 
 }
