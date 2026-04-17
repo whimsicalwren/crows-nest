@@ -2,6 +2,7 @@ package dev.wren.crowsnest.internal.argument;
 
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import dev.wren.crowsnest.internal.formatting.ConverterRegistry;
 import net.minecraft.commands.CommandSourceStack;
 
 import java.lang.reflect.Method;

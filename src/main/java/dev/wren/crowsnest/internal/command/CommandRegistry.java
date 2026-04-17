@@ -26,7 +26,6 @@ public final class CommandRegistry {
 
     private static final Map<Class<?>, NodeBuilder<?>> BUILDERS = new HashMap<>();
     private static final Map<Class<?>, LiteralCommandNode<CommandSourceStack>> BUILT = new HashMap<>();
-    private static final List<Runnable> REDIRECTS = new ArrayList<>();
 
     public static LiteralCommandNode<CommandSourceStack> getBuiltNode(Class<?> type) {
         return BUILT.get(type);
@@ -82,9 +81,7 @@ public final class CommandRegistry {
             if (!(method.getParameterCount() == 0)) continue;
             if (isInvalid(method)) continue;
 
-            boolean sameType = tClass.equals(method.getReturnType());
-
-            if (sameType) {
+            if (tClass.equals(method.getReturnType())) {
                 tNodeBuilder.command(method.getName(),
                     tClass,
                     (t, ctx) -> {
@@ -122,9 +119,7 @@ public final class CommandRegistry {
             ArgumentMap argumentTypes = ArgumentRegistry.getArgumentTypes(method);
             if (!argumentTypes.isValid()) continue;
 
-            boolean sameType = tClass.equals(method.getReturnType());
-
-            if (sameType) {
+            if (tClass.equals(method.getReturnType())) {
                 tNodeBuilder.command(method.getName(),
                     tClass,
                     argumentTypes,
@@ -178,7 +173,7 @@ public final class CommandRegistry {
     private static final List<String> nameBlackList = List.of("getClass", "hashCode", "toString", "notifyAll", "notify", "wait", "equals", "CODEC", "codec");
 
     private static final List<String> nameAndClassBlacklist = List.of(
-            "Eh.b", "Vec3#toVector3f", "LoadedShip#getTransformProvider", "BodyTransformImpl#toBuilder"
+            "Eh.b", "Vec3#toVector3f", "LoadedShip#getTransformProvider", "BodyKinematicsImpl#toBuilder", "BodyTransformImpl#toBuilder"
     );
 
     private static final List<String> operatorCommands = List.of(

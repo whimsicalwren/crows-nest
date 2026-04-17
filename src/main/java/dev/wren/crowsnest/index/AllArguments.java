@@ -5,13 +5,17 @@ import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.LongArgumentType;
 import dev.wren.crowsnest.internal.argument.ArgumentRegistry;
+import dev.wren.crowsnest.internal.argument.types.Vector3dArgument;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3d;
+import org.joml.Vector3dc;
 
 public class AllArguments {
 
     public static void register() {
         ArgumentRegistry.registerArgumentType(Vec3.class, Vec3Argument.class, Vec3Argument::vec3, Vec3Argument::getVec3);
+        ArgumentRegistry.registerArgumentType(Vector3d.class, Vector3dArgument.class, Vector3dArgument::vector3d, Vector3dArgument::getVector3d);
         ArgumentRegistry.registerArgumentType(Double.class, DoubleArgumentType.class, DoubleArgumentType::doubleArg, DoubleArgumentType::getDouble);
         ArgumentRegistry.registerArgumentType(Float.class, FloatArgumentType.class, FloatArgumentType::floatArg, FloatArgumentType::getFloat);
         ArgumentRegistry.registerArgumentType(Integer.class, IntegerArgumentType.class, IntegerArgumentType::integer, IntegerArgumentType::getInteger);
