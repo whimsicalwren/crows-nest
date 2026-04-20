@@ -6,7 +6,6 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 
 import dev.wren.crowsnest.commands.client.ShipInfoCommand;
 import dev.wren.crowsnest.commands.client.ShipyardToWorldPosCommand;
-import dev.wren.crowsnest.commands.client.ValueClearCommand;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 
@@ -16,7 +15,6 @@ public class CrowsNestCommands {
         LiteralArgumentBuilder<CommandSourceStack> clientRoot = Commands.literal("crowsnest")
                 .then(ShipyardToWorldPosCommand.register())
                 .then(ShipInfoCommand.register())
-                .then(ValueClearCommand.register())
                 ;
 
         LiteralCommandNode<CommandSourceStack> clientRootNode = dispatcher.register(clientRoot);

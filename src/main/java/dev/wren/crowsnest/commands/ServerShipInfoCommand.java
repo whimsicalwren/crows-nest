@@ -2,8 +2,8 @@ package dev.wren.crowsnest.commands;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import dev.wren.crowsnest.internal.command.CommandRegistry;
-import dev.wren.crowsnest.internal.util.ThreadValue;
 import dev.wren.crowsnest.internal.util.Util;
+import dev.wren.crowsnest.internal.util.ValueSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
@@ -19,9 +19,7 @@ public class ServerShipInfoCommand {
                     BlockPos pos = BlockPosArgument.getBlockPos(ctx, "pos");
                     LoadedServerShip serverShip = Util.getServerShipAtPos(ctx.getSource().getLevel(), pos);
 
-                    ThreadValue.set(serverShip);
-
-                    return ctx.getSource();
+                    return ctx.getSource().withSource(new ValueSource(serverShip, ctx.getSource().source));
                 })
             );
     }

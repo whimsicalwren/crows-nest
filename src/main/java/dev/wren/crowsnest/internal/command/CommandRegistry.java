@@ -7,7 +7,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import dev.wren.crowsnest.internal.formatting.ConverterRegistry;
 import dev.wren.crowsnest.internal.argument.ArgumentMap;
 import dev.wren.crowsnest.internal.argument.ArgumentRegistry;
-import dev.wren.crowsnest.internal.util.ThreadValue;
+import dev.wren.crowsnest.internal.util.ValueSource;
 import kotlin.jvm.JvmClassMappingKt;
 import kotlin.reflect.KClass;
 import kotlin.reflect.KProperty;
@@ -15,6 +15,7 @@ import kotlin.reflect.full.KClasses;
 import kotlin.reflect.jvm.ReflectJvmMapping;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -232,20 +233,28 @@ public final class CommandRegistry {
             Map<String, ArgumentBuilder<CommandSourceStack, ?>> commands = new HashMap<>();
 
             for (CommandDef<?, ?> def : builder.getCommands()) {
-                ArgumentBuilder<CommandSourceStack, ?> cmd = commands.computeIfAbsent(def.name(), Commands::literal);
-
-                String nameAndClass = def.sourceType().getSimpleName() + "#" + def.name();
-
-                if (operatorCommands.contains(nameAndClass)) cmd.requires(ctx -> ctx.hasPermission(2));
-
                 ArgumentBuilder<CommandSourceStack, ?> arguments = createArguments(def);
 
-                if (arguments == null) {
-                    if (def.returnType() != Void.class) attachRedirect(cmd, def);
+                ArgumentBuilder<CommandSourceStack, ?> cmd = commands.computeIfAbsent(def.name(), name -> createLiteral(name, def.sourceType().getSimpleName()));
 
-                    attachExecutes(cmd, def);
+                if (arguments == null) {
+                    if (cmd.getArguments().isEmpty()) {
+                        if (def.returnType() != Void.class) attachRedirect(cmd, def);
+
+                        attachExecutes(cmd, def);
+                    } else {
+                        ArgumentBuilder<CommandSourceStack, ?> newCmd = commands.computeIfAbsent(def.name() + "_", name -> createLiteral(name, def.sourceType().getSimpleName()));
+                        if (def.returnType() != Void.class) attachRedirect(newCmd, def);
+
+                        attachExecutes(newCmd, def);
+                    }
                 } else {
-                    cmd.then(arguments);
+                    if (cmd.getRedirect() == null) {
+                        cmd.then(arguments);
+                    } else {
+                        ArgumentBuilder<CommandSourceStack, ?> newCmd = commands.computeIfAbsent(def.name() + "_", name -> createLiteral(name, def.sourceType().getSimpleName()));
+                        newCmd.then(arguments);
+                    }
                 }
             }
 
@@ -253,6 +262,12 @@ public final class CommandRegistry {
                 node.addChild(cmd.build());
             }
         });
+    }
+
+    public static LiteralArgumentBuilder<CommandSourceStack> createLiteral(String name, String className) {
+        LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal(name);
+        if (operatorCommands.contains(className + "#" + name)) command.requires(ctx -> ctx.hasPermission(2));
+        return command;
     }
 
     private static <T, R> ArgumentBuilder<CommandSourceStack, ?> createArguments(CommandDef<T, R> def) {
@@ -281,20 +296,24 @@ public final class CommandRegistry {
 
     private static <T, R> void attachRedirect(ArgumentBuilder<CommandSourceStack, ?> command, CommandDef<T, R> def) {
         command.redirect(BUILT.get(def.returnType()), ctx -> {
-                T value = ThreadValue.getAs(def.sourceType());
+                if (!(ctx.getSource().source instanceof ValueSource valueSource)) return ctx.getSource();
+                T value = valueSource.getAs(def.sourceType());
 
                 R result = def.resultGetter().apply(value, ctx);
 
-                ThreadValue.set(result);
-
-                return ctx.getSource();
+                return ctx.getSource().withSource(valueSource.withResult(result));
             }
         );
     }
 
     private static <T, R> ArgumentBuilder<CommandSourceStack, ?> attachExecutes(ArgumentBuilder<CommandSourceStack, ?> command, CommandDef<T, R> def) {
         return command.executes(ctx -> {
-            T value = ThreadValue.getAs(def.sourceType());
+            if (!(ctx.getSource().source instanceof ValueSource valueSource)) {
+                ctx.getSource().sendFailure(Component.literal("Expected value of type ValueSource from context, instead got " + ctx.getSource().source.getClass().getSimpleName()));
+                return 0;
+            }
+
+            T value = valueSource.getAs(def.sourceType());
 
             R result = def.resultGetter().apply(value, ctx);
 

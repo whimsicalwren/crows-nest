@@ -2,18 +2,19 @@ package dev.wren.crowsnest.index;
 
 import com.mojang.brigadier.arguments.*;
 import dev.wren.crowsnest.internal.argument.ArgumentRegistry;
+import dev.wren.crowsnest.internal.argument.types.QuaterniondArgument;
 import dev.wren.crowsnest.internal.argument.types.Vector3dArgument;
+import dev.wren.crowsnest.internal.argument.types.Vector4dArgument;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3d;
-import org.joml.Vector3dc;
+import org.joml.*;
 
 public class AllArguments {
 
     public static void register() {
-        ArgumentRegistry.registerArgumentType(Vec3.class, Vec3Argument.class, Vec3Argument::vec3, Vec3Argument::getVec3);
-        ArgumentRegistry.registerArgumentType(Vector3d.class, Vector3dArgument.class, Vector3dArgument::vector3d, Vector3dArgument::getVector3d);
         ArgumentRegistry.registerArgumentType(Vector3dc.class, Vector3dArgument.class, Vector3dArgument::vector3d, Vector3dArgument::getVector3d);
+        ArgumentRegistry.registerArgumentType(Vector4dc.class, Vector4dArgument.class, Vector4dArgument::vector4d, Vector4dArgument::getVector4d);
+        ArgumentRegistry.registerArgumentType(Quaterniondc.class, QuaterniondArgument.class, QuaterniondArgument::quaterniond, QuaterniondArgument::getQuaterniond);
         ArgumentRegistry.registerArgumentType(Double.class, DoubleArgumentType.class, DoubleArgumentType::doubleArg, DoubleArgumentType::getDouble);
         ArgumentRegistry.registerArgumentType(Float.class, FloatArgumentType.class, FloatArgumentType::floatArg, FloatArgumentType::getFloat);
         ArgumentRegistry.registerArgumentType(Integer.class, IntegerArgumentType.class, IntegerArgumentType::integer, IntegerArgumentType::getInteger);

@@ -3,9 +3,7 @@ package dev.wren.crowsnest.index;
 import dev.wren.crowsnest.internal.command.CommandRegistry;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix3d;
-import org.joml.Matrix4d;
-import org.joml.Quaterniond;
+import org.joml.*;
 import org.valkyrienskies.core.api.ships.LoadedServerShip;
 import org.valkyrienskies.core.api.ships.LoadedShip;
 import org.valkyrienskies.core.impl.bodies.properties.BodyKinematicsImpl;
@@ -38,7 +36,8 @@ public class AllCommands {
         CommandRegistry.registerClass(Matrix4d.class);
         CommandRegistry.registerClass(Matrix3d.class);
         CommandRegistry.registerClass(AABB.class);
-        CommandRegistry.registerClass(Vec3.class);
+        CommandRegistry.registerClass(Vector3d.class);
+        CommandRegistry.registerClass(Vector4d.class);
         CommandRegistry.registerClass(Quaterniond.class);
     }
 

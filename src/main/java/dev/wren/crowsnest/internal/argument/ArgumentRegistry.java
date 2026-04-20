@@ -22,7 +22,8 @@ public class ArgumentRegistry {
     }
 
     public static ArgumentType<?> getArgumentType(Class<?> type) {
-        return ARGUMENT_TYPES.getOrDefault(type, SkipArgumentType::new).get();
+        Class<?> actual = ARGUMENT_TYPES.keySet().stream().filter(aClass -> aClass.isAssignableFrom(type)).findFirst().orElse(type);
+        return ARGUMENT_TYPES.getOrDefault(actual, SkipArgumentType::new).get();
     }
 
     @SuppressWarnings("unchecked")

@@ -25,7 +25,6 @@ import org.valkyrienskies.core.impl.shadow.Ew;
 public class AllConverters {
 
     public static void register() {
-        ConverterRegistry.registerConverter(Vector3dc.class, Vec3.class, v -> new Vec3(v.x(), v.y(), v.z()));
         ConverterRegistry.registerConverter(AABBic.class, AABB.class, box -> new AABB(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ()));
         ConverterRegistry.registerConverter(AABBdc.class, AABB.class, box -> new AABB(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ()));
         ConverterRegistry.registerCast(ChunkClaim.class, ChunkClaimImpl.class); // idk it makes it work
@@ -35,6 +34,7 @@ public class AllConverters {
         ConverterRegistry.registerCast(Matrix4dc.class, Matrix4d.class);
         ConverterRegistry.registerCast(Matrix3dc.class, Matrix3d.class);
         ConverterRegistry.registerCast(Quaterniondc.class, Quaterniond.class);
+        ConverterRegistry.registerCast(Vector3dc.class, Vector3d.class);
         ConverterRegistry.registerCast(DragController.class, Eh.class);
         ConverterRegistry.registerCast(WingManager.class, Ew.class);
         ConverterRegistry.registerCast(ShipInertiaData.class, ShipInertiaDataImpl.class);
