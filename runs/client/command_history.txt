@@ -1,0 +1,12 @@
+/sable assemble cube 1 12 -60 5
+/cn clientsublevel 20481034 128 20481034 getName
+/cn clientsublevel 20481034 128 20481034
+/cn clientsublevel 20481034 128 20481034 getName
+/cn clientsublevel 20481034 128 20481033 getName
+/cns subleve; 20481034 128 20481033 getName
+/cn clientsublevel 20481034 128 20481034 getLevel
+/cn clientsublevel 20481034 128 20481034 getUniqueId
+/cn clientsublevel 20481034 128 20481034 getPlot
+/cn sublevel 20481034 128 20481034 getUniqueId
+/cn sublevel 20481034 128 20481033 getPlot
+/cn sublevel 20481034 128 20481033 boundingBox
