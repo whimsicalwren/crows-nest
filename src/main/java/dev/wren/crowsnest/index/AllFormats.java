@@ -90,30 +90,23 @@ public class AllFormats {
                         .format(m3d.m22(), ChatFormatting.BLUE).format(SPLIT)
                         .build()
         );
+    }
 
-        FormatRegistry.registerFormat(ArrayList.class, (arr, builder) -> {
-            arr.forEach(e ->
-                    builder.format(FormatRegistry.format(e))
-                            .newline()
-                            .format("----------", ChatFormatting.WHITE)
-                            .newline()
-            );
-
-            return builder.build();
-        });
-
+    public static void registerSableTypes() {
         FormatRegistry.registerFormat(Pose3d.class, (p3d, builder) ->
                 builder.format("Position: ", ChatFormatting.WHITE)
                         .format(formatVec3(p3d.position()))
+                        .newline()
                         .format("Scale: ", ChatFormatting.WHITE)
                         .format(formatVec3(p3d.scale()))
+                        .newline()
                         .format("Orientation: ", ChatFormatting.WHITE)
                         .format(formatQuaternion(p3d.orientation()))
                         .build()
         );
 
         FormatRegistry.registerFormat(BoundingBox3d.class, (bb3d, builder) ->
-                builder.format(FormatRegistry.format(bb3d.toMojang())).build()
+                builder.format(FormatRegistry.formatRaw(bb3d.toMojang())).build()
         );
 
         FormatRegistry.registerFormat(LevelPlot.class, (lp, builder) ->
@@ -121,9 +114,5 @@ public class AllFormats {
                         .format(formatXYZ(lp.getCenterBlock()))
                         .build()
         );
-    }
-
-    public static void registerSableTypes() {
-
     }
 }

@@ -21,7 +21,7 @@ public class FormatRegistry {
     }
 
     public static Component format(Object object, String commandName) {
-        Component formatted = formatted(object);
+        Component formatted = formatRaw(object);
 
         Component cmdName = Component.literal(commandName).withStyle(ChatFormatting.DARK_AQUA);
 
@@ -33,7 +33,7 @@ public class FormatRegistry {
     }
 
     public static Component format(Object object) {
-        Component formatted = formatted(object);
+        Component formatted = formatRaw(object);
 
         Component name = Component.literal(object.getClass().getSimpleName()).withStyle(ChatFormatting.LIGHT_PURPLE);
 
@@ -64,7 +64,7 @@ public class FormatRegistry {
         return name.toString();
     }
 
-    private static Component formatted(Object object) {
+    public static Component formatRaw(Object object) {
         if (object == null) return Component.literal("null");
 
         Component formatted;

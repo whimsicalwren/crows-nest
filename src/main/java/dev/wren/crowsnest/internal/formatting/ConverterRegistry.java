@@ -31,7 +31,7 @@ public class ConverterRegistry {
 
     @SuppressWarnings("unchecked")
     public static <F, T> Class<T> getResultClass(Class<F> type) {
-        return (Class<T>) RESULTS.get(type);
+        return (Class<T>) RESULTS.getOrDefault(type, type);
     }
 
 

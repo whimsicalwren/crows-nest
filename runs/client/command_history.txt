@@ -10,3 +10,10 @@
 /cn sublevel 20481034 128 20481034 getUniqueId
 /cn sublevel 20481034 128 20481033 getPlot
 /cn sublevel 20481034 128 20481033 boundingBox
+/cn sublevel 20481034 128 20481033 logicalPose
+/cn sublevel 20481034 128 20481033 updateLastPose
+/cn sublevel 20481034 128 20481033 logicalPose
+/cn sublevel 20481034 128 20481033 boundingBox
+/cn sublevel 20481034 128 20481033 logicalPose
+/cn sublevel 20481034 128 20481033 logicalPose orientation
+/cn sublevel 20481034 128 20481033 lastPose orientation

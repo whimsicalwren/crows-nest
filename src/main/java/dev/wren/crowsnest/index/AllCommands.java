@@ -1,5 +1,6 @@
 package dev.wren.crowsnest.index;
 
+import dev.ryanhcode.sable.companion.math.BoundingBox3d;
 import dev.ryanhcode.sable.companion.math.Pose3d;
 import dev.ryanhcode.sable.sublevel.ClientSubLevel;
 import dev.ryanhcode.sable.sublevel.SubLevel;
@@ -14,6 +15,7 @@ public class AllCommands {
         CommandRegistry.registerClass(SubLevel.class);
         CommandRegistry.registerClass(ClientSubLevel.class);
         CommandRegistry.registerClass(Pose3d.class);
+        CommandRegistry.registerClass(BoundingBox3d.class);
 
         // yeah
         CommandRegistry.registerClass(Matrix4d.class);

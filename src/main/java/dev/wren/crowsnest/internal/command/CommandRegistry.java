@@ -72,12 +72,15 @@ public final class CommandRegistry {
     @SuppressWarnings("unchecked")
     public static <T, CF, CT> void registerNoParamMethods(Class<T> tClass) {
         NodeBuilder<T> tNodeBuilder = node(tClass);
+        System.out.println(tClass);
 
         for (Method method : tClass.getMethods()) {
             if (!(method.getParameterCount() == 0)) continue;
             if (isInvalid(method)) continue;
+            System.out.println(method.getName());
 
             if (tClass.equals(method.getReturnType())) {
+                System.out.println("returns e " + tClass);
                 tNodeBuilder.command(method.getName(),
                     tClass,
                     (t, ctx) -> {
@@ -92,6 +95,8 @@ public final class CommandRegistry {
 
             Class<CF> resultType = (Class<CF>) method.getReturnType();
             Class<CT> conversionResult = ConverterRegistry.getResultClass(resultType);
+
+            System.out.println("returns c " + conversionResult);
 
             tNodeBuilder.command(method.getName(),
                 conversionResult,
@@ -109,13 +114,18 @@ public final class CommandRegistry {
     public static <T, CF, CT> void registerMethods(Class<T> tClass) {
         NodeBuilder<T> tNodeBuilder = node(tClass);
 
+        System.out.println(tClass);
+
         for (Method method : tClass.getMethods()) {
             if (method.getParameterCount() == 0) continue;
             if (isInvalid(method)) continue;
             ArgumentMap argumentTypes = ArgumentRegistry.getArgumentTypes(method);
             if (!argumentTypes.isValid()) continue;
 
+            System.out.println(method.getName());
+
             if (tClass.equals(method.getReturnType())) {
+                System.out.println("returns e " + tClass);
                 tNodeBuilder.command(method.getName(),
                     tClass,
                     argumentTypes,
@@ -132,6 +142,8 @@ public final class CommandRegistry {
 
             Class<CF> resultType = (Class<CF>) method.getReturnType();
             Class<CT> conversionResult = ConverterRegistry.getResultClass(resultType);
+
+            System.out.println("returns c " + conversionResult);
 
             tNodeBuilder.command(method.getName(),
                 conversionResult,
@@ -165,7 +177,7 @@ public final class CommandRegistry {
     }
 
 
-    private static final List<String> nameBlackList = List.of("getClass", "hashCode", "toString", "notifyAll", "notify", "wait", "equals", "CODEC", "codec");
+    private static final List<String> nameBlackList = List.of("getClass", "hashCode", "toString", "notifyAll", "notify", "wait", "equals", "CODEC", "codec", "tick");
 
     private static final List<String> nameAndClassBlacklist = List.of(
 
@@ -237,6 +249,9 @@ public final class CommandRegistry {
             for (ArgumentBuilder<CommandSourceStack, ?> cmd : commands.values()) {
                 node.addChild(cmd.build());
             }
+
+            System.out.println(node.getName());
+            System.out.println(node.getChildren());
         });
     }
 
