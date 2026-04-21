@@ -1,31 +1,25 @@
-package dev.wren.crowsnest.commands.client;
+package dev.wren.crowsnest.commands;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
-
+import dev.ryanhcode.sable.sublevel.SubLevel;
 import dev.wren.crowsnest.internal.command.CommandRegistry;
 import dev.wren.crowsnest.internal.util.Util;
 import dev.wren.crowsnest.internal.util.ValueSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
-
 import net.minecraft.core.BlockPos;
-import org.valkyrienskies.core.api.ships.LoadedShip;
 
-/**
- * it can't be <i>that</i> hard, can it?
- * <a href="https://tenor.com/view/clueless-gif-24395495">:clueless:</a>
- */
-public class ShipInfoCommand {
+public class SubLevelInfoCommand {
 
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
-        return Commands.literal("ship")
+        return Commands.literal("sublevel")
             .then(Commands.argument("pos", BlockPosArgument.blockPos())
-                .redirect(CommandRegistry.getBuiltNode(LoadedShip.class), ctx -> {
+                .redirect(CommandRegistry.getBuiltNode(SubLevel.class), ctx -> {
                     BlockPos pos = BlockPosArgument.getBlockPos(ctx, "pos");
-                    LoadedShip ship = Util.getShipAtPos(ctx.getSource().getUnsidedLevel(), pos);
+                    SubLevel subLevel = Util.getSubLevel(ctx.getSource().getUnsidedLevel(), pos);
 
-                    return ctx.getSource().withSource(new ValueSource(ship, ctx.getSource().source));
+                    return ctx.getSource().withSource(new ValueSource(subLevel, ctx.getSource().source));
                 })
             );
     }

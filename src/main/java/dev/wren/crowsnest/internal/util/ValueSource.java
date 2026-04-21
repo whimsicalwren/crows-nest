@@ -2,8 +2,6 @@ package dev.wren.crowsnest.internal.util;
 
 import net.minecraft.commands.CommandSource;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 
 public class ValueSource implements CommandSource {
 

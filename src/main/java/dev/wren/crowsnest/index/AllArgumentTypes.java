@@ -10,15 +10,15 @@ import java.util.function.Supplier;
 public class AllArgumentTypes {
 
     public static void register() {
-        argument(Vector3dArgument.class, Vector3dArgument::vector3d);
-        argument(Vector3fArgument.class, Vector3fArgument::vector3f);
-        argument(Vector4dArgument.class, Vector4dArgument::vector4d);
-        argument(Vector4fArgument.class, Vector4fArgument::vector4f);
-        argument(QuaterniondArgument.class, QuaterniondArgument::quaterniond);
-        argument(QuaternionfArgument.class, QuaternionfArgument::quaternionf);
+        a(Vector3dArgument.class, Vector3dArgument::vector3d);
+        a(Vector3fArgument.class, Vector3fArgument::vector3f);
+        a(Vector4dArgument.class, Vector4dArgument::vector4d);
+        a(Vector4fArgument.class, Vector4fArgument::vector4f);
+        a(QuaterniondArgument.class, QuaterniondArgument::quaterniond);
+        a(QuaternionfArgument.class, QuaternionfArgument::quaternionf);
     }
 
-    private static <A extends ArgumentType<?>> void argument(Class<A> argumentTypeClass, Supplier<A> argumentTypeSupplier) {
+    private static <A extends ArgumentType<?>> void a(Class<A> argumentTypeClass, Supplier<A> argumentTypeSupplier) {
         ArgumentTypeInfos.registerByClass(argumentTypeClass, SingletonArgumentInfo.contextFree(argumentTypeSupplier));
     }
 

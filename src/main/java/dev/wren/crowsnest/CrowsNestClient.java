@@ -1,13 +1,13 @@
 package dev.wren.crowsnest;
 
 import dev.wren.crowsnest.commands.CrowsNestCommands;
-import net.minecraftforge.client.event.RegisterClientCommandsEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
+import net.neoforged.neoforge.common.NeoForge;
 
 
 public class CrowsNestClient {
     public static void init() {
-        MinecraftForge.EVENT_BUS.addListener(CrowsNestClient::registerClientCommands);
+        NeoForge.EVENT_BUS.addListener(CrowsNestClient::registerClientCommands);
     }
 
     public static void registerClientCommands(RegisterClientCommandsEvent event) {

@@ -8,11 +8,6 @@ import dev.wren.crowsnest.internal.formatting.ConverterRegistry;
 import dev.wren.crowsnest.internal.argument.ArgumentMap;
 import dev.wren.crowsnest.internal.argument.ArgumentRegistry;
 import dev.wren.crowsnest.internal.util.ValueSource;
-import kotlin.jvm.JvmClassMappingKt;
-import kotlin.reflect.KClass;
-import kotlin.reflect.KProperty;
-import kotlin.reflect.full.KClasses;
-import kotlin.reflect.jvm.ReflectJvmMapping;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -158,7 +153,7 @@ public final class CommandRegistry {
                 || Modifier.isStatic(modifiers)
                 || method.isSynthetic()
                 || isBlacklisted(method)
-                || isDeprecated(method);
+                || method.isAnnotationPresent(Deprecated.class);
     }
 
     private static boolean isInvalid(Field field) {
@@ -166,7 +161,6 @@ public final class CommandRegistry {
         return (!Modifier.isPublic(modifiers))
                 || Modifier.isStatic(modifiers)
                 || isBlacklisted(field)
-                || field.isAnnotationPresent(kotlin.Deprecated.class)
                 || field.isAnnotationPresent(Deprecated.class);
     }
 
@@ -174,11 +168,11 @@ public final class CommandRegistry {
     private static final List<String> nameBlackList = List.of("getClass", "hashCode", "toString", "notifyAll", "notify", "wait", "equals", "CODEC", "codec");
 
     private static final List<String> nameAndClassBlacklist = List.of(
-            "Eh.b", "Vec3#toVector3f", "LoadedShip#getTransformProvider", "BodyKinematicsImpl#toBuilder", "BodyTransformImpl#toBuilder"
+
     );
 
     private static final List<String> operatorCommands = List.of(
-        "Eh#enableDrag", "Eh#disableDrag", "Eh#enableLift", "Eh#disableLift", "Eh#enableRotDrag", "Eh#disableRotDrag", "Ew#clearWingChanges", "Ew#getWingChanges"
+
     );
 
     private static boolean isBlacklisted(Method method) {
@@ -194,24 +188,6 @@ public final class CommandRegistry {
     }
     private static String withClass(Method method) {
         return method.getDeclaringClass().getSimpleName() + "#" + method.getName();
-    }
-
-    public static boolean isDeprecated(Method method) {
-        if (method.isAnnotationPresent(Deprecated.class)) return true;
-        if (method.isAnnotationPresent(kotlin.Deprecated.class)) return true;
-
-        KClass<?> kClass = JvmClassMappingKt.getKotlinClass(method.getDeclaringClass());
-
-        for (KProperty<?> prop : KClasses.getMemberProperties(kClass)) {
-            Method getter = ReflectJvmMapping.getJavaGetter(prop);
-
-            if (getter != null && getter.equals(method)) {
-                return prop.getAnnotations().stream()
-                        .anyMatch(a -> a.annotationType() == kotlin.Deprecated.class);
-            }
-        }
-
-        return false;
     }
 
     public static <T> void registerClass(Class<T> tClass) {

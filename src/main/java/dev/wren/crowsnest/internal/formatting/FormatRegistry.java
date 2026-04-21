@@ -4,10 +4,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.TypeVariable;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -18,8 +16,8 @@ public class FormatRegistry {
 
     private static final Map<Class<?>, Function<Object, Component>> FORMATTERS = new HashMap<>();
 
-    public static <T> void registerFormat(Class<T> type, BiFunction<T, FormatBuilder, Component> formatter) {
-        FORMATTERS.put(type, object -> formatter.apply(type.cast(object), new FormatBuilder()));
+    public static <T> void registerFormat(Class<T> type, BiFunction<T, Format.Builder, Component> formatter) {
+        FORMATTERS.put(type, object -> formatter.apply(type.cast(object), Format.builder()));
     }
 
     public static Component format(Object object, String commandName) {
@@ -40,6 +38,30 @@ public class FormatRegistry {
         Component name = Component.literal(object.getClass().getSimpleName()).withStyle(ChatFormatting.LIGHT_PURPLE);
 
         return Component.literal("Type: ").append(name).append(NEWLINE.component()).append(formatted);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static String formatClassName(Class<?> c) {
+        StringBuilder name = new StringBuilder(c.getSimpleName());
+
+        if (c.getTypeParameters().length > 0) {
+            name.append("<");
+            Iterator<? extends TypeVariable<? extends Class<?>>> itr = Arrays.stream(c.getTypeParameters()).iterator();
+
+            TypeVariable<Class<?>> next = (TypeVariable<Class<?>>) itr.next();
+
+            name.append(next.getName());
+
+            while (itr.hasNext()) {
+                TypeVariable<Class<?>> next1 = (TypeVariable<Class<?>>) itr.next();
+
+                name.append(", ").append(next1.getName());
+            }
+
+            name.append(">");
+        }
+
+        return name.toString();
     }
 
     private static Component formatted(Object object) {

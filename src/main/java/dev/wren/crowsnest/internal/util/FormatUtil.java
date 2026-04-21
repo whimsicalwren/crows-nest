@@ -3,7 +3,9 @@ package dev.wren.crowsnest.internal.util;
 import dev.wren.crowsnest.internal.formatting.Format;
 import dev.wren.crowsnest.internal.formatting.FormatRegistry;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaterniondc;
 import org.joml.Vector3dc;
@@ -56,6 +58,10 @@ public class FormatUtil {
 
     public static Format[] formatXYZ(Vec3 vec) {
         return formatXYZ(vec.x, vec.y, vec.z);
+    }
+
+    public static Format[] formatXYZ(BlockPos pos) {
+        return formatXYZ(pos.getX(), pos.getY(), pos.getZ());
     }
 
     public static Format[] formatXYZ(Vector3dc vec) {
