@@ -6,9 +6,12 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class CrowsNestCommands {
 
+    @OnlyIn(Dist.CLIENT)
     public static void registerClient(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> clientRoot = Commands.literal("crowsnest")
                 .then(ClientSubLevelInfoCommand.register())
@@ -16,15 +19,5 @@ public class CrowsNestCommands {
 
         LiteralCommandNode<CommandSourceStack> clientRootNode = dispatcher.register(clientRoot);
         dispatcher.register(Commands.literal("cn").redirect(clientRootNode));
-    }
-
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("crowsnest")
-                .then(ClientSubLevelInfoCommand.register())
-                .then(SubLevelInfoCommand.register());
-
-        LiteralCommandNode<CommandSourceStack> rootNode = dispatcher.register(root);
-
-        dispatcher.register(Commands.literal("cn").redirect(rootNode));
     }
 }

@@ -11,11 +11,14 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 
 import net.minecraft.core.BlockPos;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 /**
  * it can't be <i>that</i> hard, can it?
  * <a href="https://tenor.com/view/clueless-gif-24395495">:clueless:</a>
  */
+@OnlyIn(Dist.CLIENT)
 public class ClientSubLevelInfoCommand {
 
     public static ArgumentBuilder<CommandSourceStack, ?> register() {

@@ -168,7 +168,10 @@ public final class CommandRegistry {
     private static final List<String> nameBlackList = List.of("getClass", "hashCode", "toString", "notifyAll", "notify", "wait", "equals", "CODEC", "codec", "tick");
 
     private static final List<String> nameAndClassBlacklist = List.of(
-
+        "SubLevel#markRemoved", "SubLevel#onRemove", "SubLevel#onPlotBoundsChanged", "SubLevel#updateBoundingBox",
+            "SubLevel#updateLastPose", "ClientSubLevel#forceUpdateBounds", "ClientSubLevel#markRemoved", "ClientSubLevel#onRemove",
+            "ClientSubLevel#onPlotBoundsChanged", "ClientSubLevel#receiveServerMovementStop", "ClientSubLevel#updateBoundingBox",
+            "ClientSubLevel#updateLastPose", "ClientSubLevel#updateRenderData", "ClientSubLevel#setFinalized"
     );
 
     private static final List<String> operatorCommands = List.of(
