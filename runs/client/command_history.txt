@@ -17,3 +17,28 @@
 /cn sublevel 20481034 128 20481033 logicalPose
 /cn sublevel 20481034 128 20481033 logicalPose orientation
 /cn sublevel 20481034 128 20481033 lastPose orientation
+/time set day
+/cn sublevel 20481034 128 20481033 logicalPose
+/cn sublevel 20481034 128 20481033 markRemoved
+/cn sublevel 20481034 128 20481033
+/cn sublevel 20481034 128 20481033 getUniqueId
+/cn clientsublevel 20481034 128 20481033 getRenderData
+/cn sublevel 20481034 128 20481033 boundingBox
+/cn clientsublevel 20481034 128 20481033 getUniqueId
+/cn sublevel 20481034 128 20481033 lastPose
+/a
+/cn
+/a
+/cn sublevel 20481032 128 20483080 lastPose
+/cn sublevel 20481032 128 20483080 markRemoved
+/cn sublevel 20481032 128 20483080 onRemove
+/cn sublevel 20481032 128 20483080 onPlotBoundsChanged
+/cn sublevel 20481032 128 20483080 updateLastPose
+/cn sublevel 20481032 128 20483080 updateBoundingBox
+/cn clientsublevel 20481032 128 20483080 forceUpdateBounds
+/cn clientsublevel 20481032 128 20483080 receiveServerMovementStop
+/cn clientsublevel 20481032 128 20481032 receiveServerMovementStop
+/cn clientsublevel 20481032 128 20481032 renderPose
+/cn clientsublevel 20481032 128 20481032 setFinalized
+/cn clientsublevel 20481034 128 20481033 renderPose
+/cn clientsublevel 20481034 128 20481033 getLatestSkyLightScale
